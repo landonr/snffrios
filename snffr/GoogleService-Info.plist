@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>1036341124516-effgc8d27k1ag7k3qod2i2sfq8vtqo1f.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1036341124516-effgc8d27k1ag7k3qod2i2sfq8vtqo1f</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBrU-FxD_uwdTO3frnRa5jC6n5OMGyKWLM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1036341124516</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.tastytreats.snffr</string>
+	<key>PROJECT_ID</key>
+	<string>rezqs-18f9c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>rezqs-18f9c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1036341124516:ios:a3a56668d903a21e</string>
+	<key>DATABASE_URL</key>
+	<string>https://rezqs-18f9c.firebaseio.com</string>
+</dict>
+</plist>

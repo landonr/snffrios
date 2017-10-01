@@ -8,6 +8,9 @@ target 'snffr' do
   pod 'Auth0', '~> 1.8'
   pod 'Alamofire'
   pod 'AlamofireObjectMapper', '~> 4.0'  
+  pod 'Firebase/Database'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
   # Pods for snffr
 
 end

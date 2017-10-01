@@ -8,6 +8,8 @@
 
 import UIKit
 import Auth0
+import Firebase
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -17,7 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        URLCache.shared.removeAllCachedResponses()
+
+        FirebaseApp.configure()
+        _ = DogViewModel.sharedInstance
+        _ = UserViewModel.sharedInstance
+        _ = MedicalInfoViewModel.sharedInstance
+        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "navigation")!.resizableImage(withCapInsets: UIEdgeInsetsMake(0, 0, 0, 0), resizingMode: .stretch), for: .default)
+        UINavigationBar.appearance().isTranslucent = false
         return true
     }
 
