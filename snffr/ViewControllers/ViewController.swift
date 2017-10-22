@@ -8,13 +8,17 @@
 
 import UIKit
 import Auth0
+import Firebase
 
 class ViewController: UIViewController {
     var firstLoad = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view, typically from a nib.
+        FirebaseApp.configure()
+        _ = DogViewModel.sharedInstance
+        _ = UserViewModel.sharedInstance
+        _ = MedicalInfoViewModel.sharedInstance
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,7 +50,7 @@ class ViewController: UIViewController {
                 switch(result) {
                 case .success(let profile):
                     self.signUpFirebaseWithCredentials(credentials: profile, password: credentials.accessToken!)
-                case .failure(let error):
+                case .failure( _):
                     // Handle the error
                     break;
                 }
@@ -55,35 +59,15 @@ class ViewController: UIViewController {
     
     func signUpFirebaseWithCredentials(credentials: Auth0.UserInfo, password: String)
     {
-        //hey man
-        var name = ""
         var email = "landonroha@gmail.com"
         
-        if let namer = credentials.name {
-            name = namer
-        }
+//        if let namer = credentials.name {
+//            name = namer
+//        }
         
         if let emaile = credentials.email {
             email = emaile;
         }
-        
-//        User.registerUser(withName: name, email: email, password:"password", profilePic: UIImage(named: "send")!) { [weak weakSelf = self] (status) in
-//            DispatchQueue.main.async {
-////                //weakSelf?.showLoading(state: false)
-////                for item in self.inputFields {
-////                    item.text = ""
-////                }
-////              if status == true {
-////                  //weakSelf?.pushTomainView()
-////                  //weakSelf?.profilePicView.image = UIImage.init(named: "profile pic")
-////              } else {
-////                    for item in (weakSelf?.waringLabels)! {
-////                        item.isHidden = false
-////                    }
-////              }
-//                self.performSegue(withIdentifier: "showChat", sender: self)
-//            }
-//        }
         
         User.loginUser(withEmail: email, password: "password") { (success) in
             self.performSegue(withIdentifier: "showChat", sender: self)

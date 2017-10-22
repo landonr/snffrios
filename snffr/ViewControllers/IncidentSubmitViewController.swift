@@ -68,17 +68,15 @@ extension IncidentSubmitViewController: UITableViewDataSource
 extension IncidentSubmitViewController: UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //
-        var newI = Incident(message: self.messageString)
+        var newIncident = Incident(message: self.messageString)
         if let dogid = self.message?.dogId {
-            newI.dogId = Int(dogid)
+            newIncident.dogId = Int(dogid)
         }
-        newI.incidentTypeId = indexPath.row
+        newIncident.incidentTypeId = indexPath.row
         
-        let dict = newI.dictionaryRepresentation()
+        let dict = newIncident.dictionaryRepresentation()
         
         Alamofire.request("http://rezqs.herokuapp.com/api/incidents", method: .post, parameters: dict, encoding: JSONEncoding.default, headers: nil).responseString { (responseString) in
-            print(responseString.result.value)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newIncident"), object: nil, userInfo: nil)
         }
         
