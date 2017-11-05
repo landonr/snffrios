@@ -17,7 +17,6 @@ class IncidentManageViewController: UIViewController
     var incidents = ["Question", "Medical Update", "Supplies"]
     var activeDog: Dog?
     
-    var incident = [Incident]()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.layoutIfNeeded()
@@ -38,37 +37,27 @@ class IncidentManageViewController: UIViewController
     
     func loadData()
     {
-        let getIncidentOperation = GetIncidentOperation() { (response) in
-            if let incidents = response {
-                //self.busLocations = busLocations
-                self.incident = incidents
-                self.tableView?.reloadData()
-            }
-        }
-        
-        self.queue.addOperation(getIncidentOperation)
         self.tableView?.reloadData()
     }
     
     func completeIncident(index: Int) {
         print("complete")
-        self.incident[index].incidentStatusId = 0
+        IncidentViewModel.sharedInstance.incidents[index].incidentStatusId = 0
         self.tableView?.reloadData()
     }
     
     func viewProfile(index: Int) {
         print("view profile")
-        let incident = self.incident[index]
-        if let dog = DogViewModel.sharedInstance.dogForId(id: String(incident.dogId!)) {
-            self.activeDog = dog
-            self.performSegue(withIdentifier: "showProfile", sender: self)
-        }
+        let incident = IncidentViewModel.sharedInstance.incidents[index]
+        self.performSegue(withIdentifier: "showProfile", sender: incident)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showProfile" {
-            if let vc = segue.destination as? ProfileViewController {
-                vc.activedoggo = self.activeDog
+            if let vc = segue.destination as? ProfileViewController,
+                let incident = sender as? Incident,
+                let dogId = incident.dogId {
+                vc.activedoggo = DogViewModel.sharedInstance.dogForId(id: String(dogId))
             }
         }
     }
@@ -78,20 +67,19 @@ extension IncidentManageViewController: UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? IncidentManageTVCell {
-            let incident = self.incident[indexPath.row]
+            let incident = IncidentViewModel.sharedInstance.incidents[indexPath.row]
             cell.incidentStatusLabel.text = incident.message
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             let date = dateFormatter.date(from: incident.createdAt!)
             
-            //2017-09-30T22:00:48.000Z
             let formatter = DateFormatter()
             formatter.dateFormat = "h:mm a"
             formatter.amSymbol = "AM"
             formatter.pmSymbol = "PM"
             
-            if let dogid = self.incident[indexPath.row].dogId
+            if let dogid = IncidentViewModel.sharedInstance.incidents[indexPath.row].dogId
                 , let dog = DogViewModel.sharedInstance.dogForId(id: String(dogid)) {
                 cell.incidentLabel?.text = dog.name
             }
@@ -112,7 +100,7 @@ extension IncidentManageViewController: UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.incident.count
+        return IncidentViewModel.sharedInstance.incidents.count
     }
 }
 
@@ -120,7 +108,7 @@ extension IncidentManageViewController: UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let incident = self.incident[indexPath.row]
+        let incident = IncidentViewModel.sharedInstance.incidents[indexPath.row]
         let dog = DogViewModel.sharedInstance.dogForId(id: String(incident.dogId!))
         let message = self.incidents[incident.incidentTypeId!] + " - " + incident.message!
         let alertController = UIAlertController(title: dog?.name, message: message, preferredStyle: .alert)

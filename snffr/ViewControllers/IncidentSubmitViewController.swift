@@ -68,7 +68,7 @@ extension IncidentSubmitViewController: UITableViewDataSource
 extension IncidentSubmitViewController: UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var newIncident = Incident(message: self.messageString)
+        let newIncident = Incident(message: self.messageString)
         if let dogid = self.message?.dogId {
             newIncident.dogId = Int(dogid)
         }

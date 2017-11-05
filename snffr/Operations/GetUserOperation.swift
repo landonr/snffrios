@@ -1,33 +1,32 @@
 //
-//  GetIncidentOperation.swift
+//  GetUserOperation.swift
 //  snffr
 //
-//  Created by Landon Rohatensky on 2017-09-30.
+//  Created by Landon Rohatensky on 2017-11-04.
 //  Copyright © 2017 Landon Rohatensky. All rights reserved.
 //
 
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
-class GetIncidentOperation: Operation {
+class GetUserOperation: Operation {
     
-    fileprivate var completion: (([Incident]?) -> Void)!
+    fileprivate var completion: (([Foster]?) -> Void)!
     
-    enum GetIncidentOperationError: Error {
+    enum GetUserOperationError: Error {
         case busted
     }
     
-    init(completionBlock: @escaping (([Incident]?) -> Void)) {
+    init(completionBlock: @escaping (([Foster]?) -> Void)) {
         self.completion = completionBlock
     }
     
     override func start() {
-        getIncidents()
+        getUsers()
     }
     
-    func getIncidents() {
-        Alamofire.request("http://rezqs.herokuapp.com/api/incidents").responseArray {(response: DataResponse<[Incident]>) in
-
+    func getUsers() {
+        Alamofire.request("http://rezqs.herokuapp.com/api/users").responseArray {(response: DataResponse<[Foster]>) in
             if let result = response.result.value {
                 self.completion(result)
             } else {

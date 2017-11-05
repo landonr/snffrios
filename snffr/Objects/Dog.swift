@@ -42,7 +42,6 @@ public class Dog: Mappable, NSCoding {
     public var dogTypeId: Int?
     public var profileUrl: String?
     public var image: UIImage?
-    
     // MARK: ObjectMapper Initializers
     /// Map a JSON object to this class using ObjectMapper.
     ///

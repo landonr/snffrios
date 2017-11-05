@@ -37,11 +37,7 @@ class LandingVC: UIViewController {
     func pushTo(viewController: ViewControllerType)  {
         switch viewController {
         case .conversations:
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "Navigation") as! NavVC
-            self.present(vc, animated: false, completion: nil)
-        case .welcome:
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "Welcome") as! WelcomeVC
-            self.present(vc, animated: false, completion: nil)
+            self.performSegue(withIdentifier: "showNav", sender: self)
         }
     }
     
@@ -55,14 +51,10 @@ class LandingVC: UIViewController {
                 DispatchQueue.main.async {
                     if status == true {
                         weakSelf?.pushTo(viewController: .conversations)
-                    } else {
-                        weakSelf?.pushTo(viewController: .welcome)
                     }
                     weakSelf = nil
                 }
             })
-        } else {
-            self.pushTo(viewController: .welcome)
         }
     }
 

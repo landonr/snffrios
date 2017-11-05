@@ -17,28 +17,16 @@ class ProfileViewController: UIViewController
     @IBOutlet var tableView: UITableView!
     
     let sections = ["Medical", "Vaccinations", "Training"]
-    let trainingArray = ["3 years of doggo university", "not trained", "phd masters in being a good boye."]
+    let trainingArray = ["3 years of doggo university", "not trained", "phd in being a good boye."]
     let medicalArray = ["Broken hip in 2014", "Very Healthy", "Underweight"]
     let vaccinationArray = ["All the shots", "the good shots", "no shots"]
 
     var profileId: String?
     var activedoggo: Dog?
-    var medicals = [Medical]()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.layoutIfNeeded()
-    }
-    
-    func medicalsForId(id: Int) -> [Medical]
-    {
-        var meds = [Medical]()
-        for med in self.medicals {
-            if med.medicalInfoTypeId! == id {
-                meds.append(med)
-            }
-        }
-        return meds
     }
     
     override func viewDidLoad() {
@@ -46,15 +34,12 @@ class ProfileViewController: UIViewController
         self.navigationController?.navigationBar.tintColor = UIColor.white;
         self.nameLabel?.text = self.activedoggo?.name
         self.profilePicture?.image = self.activedoggo?.image
-        if let dogid = self.activedoggo?.dogId {
-            self.medicals = MedicalInfoViewModel.sharedInstance.userForId(id: String(dogid))!
-        }
     }
 }
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.medicalsForId(id: section+1).count
+        return MedicalInfoViewModel.sharedInstance.medicalsForInfoTypeIdAndDogId(section+1, dogId: (self.activedoggo?.dogId)!).count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -62,12 +47,12 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return self.sections.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
-        cell.textLabel?.text = self.medicalsForId(id: indexPath.section+1)[indexPath.row].info
+        let cell = UITableViewCell()
+        cell.textLabel?.text = MedicalInfoViewModel.sharedInstance.medicalsForInfoTypeIdAndDogId(indexPath.section+1, dogId: (self.activedoggo?.dogId)!)[indexPath.row].info
         return cell
     }
 }
