@@ -18,10 +18,7 @@ class LaunchViewController: UIViewController {
         super.viewDidLoad()
         
         FirebaseApp.configure()
-        _ = DogViewModel.sharedInstance
-        _ = UserViewModel.sharedInstance
-        _ = MedicalInfoViewModel.sharedInstance
-        _ = IncidentViewModel.sharedInstance
+        _ = OperationViewModel()
     }
     
     fileprivate func saveAccesstoken(_ token: String?, admin: Bool?) {
@@ -36,8 +33,7 @@ class LaunchViewController: UIViewController {
         if let accessToken = getAccessToken() {
             self.getProfile(accessToken)
         } else {
-            Auth0
-                .webAuth()
+            Auth0.webAuth()
                 .scope("openid profile")
                 .audience("https://patrickullrich.auth0.com/userinfo")
                 .start { result in
@@ -133,10 +129,11 @@ class LaunchViewController: UIViewController {
         
         User.loginUser(withEmail: email, password: "password") { (success) in
             if success {
-                self.performSegue(withIdentifier: "showChat", sender: self)
+                self.proceedToApp()
             } else {
                 self.simpleRegister(email: email, username: name, password: "password", completion: { (success) in
                     if success {
+                        UserViewModel.sharedInstance.updateUser(user: credentials)
                         self.proceedToApp()
                     } else {
                         self.login()

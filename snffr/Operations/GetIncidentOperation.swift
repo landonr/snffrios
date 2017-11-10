@@ -27,7 +27,6 @@ class GetIncidentOperation: Operation {
     
     func getIncidents() {
         Alamofire.request("http://rezqs.herokuapp.com/api/incidents").responseArray {(response: DataResponse<[Incident]>) in
-
             if let result = response.result.value {
                 self.completion(result)
             } else {

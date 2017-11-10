@@ -12,6 +12,8 @@
 		8F9954471FAEA99100E3BA09 /* GetUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9954461FAEA99100E3BA09 /* GetUserOperation.swift */; };
 		8F9954491FAEA9B000E3BA09 /* GetMedicalInfoOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9954481FAEA9B000E3BA09 /* GetMedicalInfoOperation.swift */; };
 		8F99544B1FAEAA7D00E3BA09 /* IncidentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F99544A1FAEAA7D00E3BA09 /* IncidentViewModel.swift */; };
+		8F99544D1FAF87FE00E3BA09 /* OperationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F99544C1FAF87FE00E3BA09 /* OperationViewModel.swift */; };
+		8F99544F1FAFC3F100E3BA09 /* PostUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F99544E1FAFC3F100E3BA09 /* PostUserOperation.swift */; };
 		8FE010521F7C8F7700849203 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE010511F7C8F7700849203 /* AppDelegate.swift */; };
 		8FE010541F7C8F7700849203 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE010531F7C8F7700849203 /* LaunchViewController.swift */; };
 		8FE010591F7C8F7700849203 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FE010581F7C8F7700849203 /* Assets.xcassets */; };
@@ -49,6 +51,8 @@
 		8F9954461FAEA99100E3BA09 /* GetUserOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserOperation.swift; sourceTree = "<group>"; };
 		8F9954481FAEA9B000E3BA09 /* GetMedicalInfoOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMedicalInfoOperation.swift; sourceTree = "<group>"; };
 		8F99544A1FAEAA7D00E3BA09 /* IncidentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncidentViewModel.swift; sourceTree = "<group>"; };
+		8F99544C1FAF87FE00E3BA09 /* OperationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationViewModel.swift; sourceTree = "<group>"; };
+		8F99544E1FAFC3F100E3BA09 /* PostUserOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUserOperation.swift; sourceTree = "<group>"; };
 		8FE0104E1F7C8F7700849203 /* snffr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = snffr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE010511F7C8F7700849203 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FE010531F7C8F7700849203 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +105,7 @@
 				8F9954421FAEA91700E3BA09 /* UserViewModel.swift */,
 				8F9954441FAEA93B00E3BA09 /* MedicalInfoViewModel.swift */,
 				8F99544A1FAEAA7D00E3BA09 /* IncidentViewModel.swift */,
+				8F99544C1FAF87FE00E3BA09 /* OperationViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -121,8 +126,9 @@
 			children = (
 				FA4E7CED1F7FF4E300CFBABA /* GetIncidentOperation.swift */,
 				FA4E7CFD1F80277D00CFBABA /* GetDogOperation.swift */,
-				8F9954461FAEA99100E3BA09 /* GetUserOperation.swift */,
 				8F9954481FAEA9B000E3BA09 /* GetMedicalInfoOperation.swift */,
+				8F9954461FAEA99100E3BA09 /* GetUserOperation.swift */,
+				8F99544E1FAFC3F100E3BA09 /* PostUserOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -400,6 +406,7 @@
 				8FE010541F7C8F7700849203 /* LaunchViewController.swift in Sources */,
 				FA4B6A2C1F80686B00AD2B05 /* Medical.swift in Sources */,
 				FA4E7D001F802B3800CFBABA /* DogViewModel.swift in Sources */,
+				8F99544D1FAF87FE00E3BA09 /* OperationViewModel.swift in Sources */,
 				FA60B90E1F7F4F9300B410A4 /* User.swift in Sources */,
 				FA60B90D1F7F4F9300B410A4 /* Message.swift in Sources */,
 				8F9954451FAEA93B00E3BA09 /* MedicalInfoViewModel.swift in Sources */,
@@ -412,6 +419,7 @@
 				FA4E7CFC1F80272300CFBABA /* Dog.swift in Sources */,
 				FA4E7CE71F7F627A00CFBABA /* ProfileViewController.swift in Sources */,
 				FA4E7CFE1F80277D00CFBABA /* GetDogOperation.swift in Sources */,
+				8F99544F1FAFC3F100E3BA09 /* PostUserOperation.swift in Sources */,
 				FA60B90B1F7F4F8E00B410A4 /* Helper Files.swift in Sources */,
 				FA60B9111F7F4F9A00B410A4 /* ConversationsVC.swift in Sources */,
 				FA8384361F80671F000CF815 /* Foster.swift in Sources */,

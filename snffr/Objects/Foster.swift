@@ -20,6 +20,7 @@ public class Foster: Mappable, NSCoding {
     static let userId = "userId"
     static let firstName = "firstName"
     static let phoneId = "phoneId"
+    static let auth0Key = "auth0Key"
   }
 
   // MARK: Properties
@@ -32,7 +33,7 @@ public class Foster: Mappable, NSCoding {
   public var userId: Int?
   public var firstName: String?
   public var phoneId: String?
-
+  public var auth0Key: String?
   // MARK: ObjectMapper Initializers
   /// Map a JSON object to this class using ObjectMapper.
   ///
@@ -54,6 +55,7 @@ public class Foster: Mappable, NSCoding {
     userId <- map[SerializationKeys.userId]
     firstName <- map[SerializationKeys.firstName]
     phoneId <- map[SerializationKeys.phoneId]
+    auth0Key <- map[SerializationKeys.auth0Key]
   }
 
   /// Generates description of the object in the form of a NSDictionary.
@@ -70,6 +72,7 @@ public class Foster: Mappable, NSCoding {
     if let value = userId { dictionary[SerializationKeys.userId] = value }
     if let value = firstName { dictionary[SerializationKeys.firstName] = value }
     if let value = phoneId { dictionary[SerializationKeys.phoneId] = value }
+    if let value = auth0Key { dictionary[SerializationKeys.auth0Key] = value }
     return dictionary
   }
 
@@ -84,6 +87,7 @@ public class Foster: Mappable, NSCoding {
     self.userId = aDecoder.decodeObject(forKey: SerializationKeys.userId) as? Int
     self.firstName = aDecoder.decodeObject(forKey: SerializationKeys.firstName) as? String
     self.phoneId = aDecoder.decodeObject(forKey: SerializationKeys.phoneId) as? String
+    self.auth0Key = aDecoder.decodeObject(forKey: SerializationKeys.auth0Key) as? String
   }
 
   public func encode(with aCoder: NSCoder) {
@@ -96,6 +100,6 @@ public class Foster: Mappable, NSCoding {
     aCoder.encode(userId, forKey: SerializationKeys.userId)
     aCoder.encode(firstName, forKey: SerializationKeys.firstName)
     aCoder.encode(phoneId, forKey: SerializationKeys.phoneId)
+    aCoder.encode(auth0Key, forKey: SerializationKeys.auth0Key)
   }
-
 }
