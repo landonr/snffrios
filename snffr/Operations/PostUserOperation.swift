@@ -20,6 +20,7 @@ class PostUserOperation: Operation {
     }
     
     init(_ userInfo: UserInfo, completionBlock: @escaping (() -> Void)) {
+        self.userInfo = userInfo
         self.completion = completionBlock
     }
     
@@ -41,7 +42,7 @@ class PostUserOperation: Operation {
         if let authKey = userInfo?.sub {
             foster?.auth0Key = authKey
         }
-        
+        UserViewModel.sharedInstance.activeUser = foster
         Alamofire.request("http://rezqs.herokuapp.com/api/users", method: .post, parameters: foster?.dictionaryRepresentation()).response { (response) in
             self.completion()
         }

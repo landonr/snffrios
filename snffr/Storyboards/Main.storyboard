@@ -48,7 +48,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up new account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Org-XI-lmc">
-                                <rect key="frame" x="66.5" y="100" width="242" height="32.5"/>
+                                <rect key="frame" x="66" y="249" width="242" height="32.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -65,19 +65,32 @@
                                     <action selector="didTapAdminSignup" destination="NxD-JQ-vHM" eventType="touchUpInside" id="YYe-fT-l0O"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3cm-oy-QRQ">
+                                <rect key="frame" x="156" y="72" width="62" height="38"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" title="Log in">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapLogin" destination="NxD-JQ-vHM" eventType="touchUpInside" id="J0R-5h-ynn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="olR-Ls-1Cs" firstAttribute="top" secondItem="Org-XI-lmc" secondAttribute="bottom" constant="200" id="5y1-Z0-1xc"/>
+                            <constraint firstItem="olR-Ls-1Cs" firstAttribute="top" secondItem="Org-XI-lmc" secondAttribute="bottom" constant="51" id="5y1-Z0-1xc"/>
                             <constraint firstItem="dCz-qP-bC6" firstAttribute="centerX" secondItem="t8o-1y-kY1" secondAttribute="centerX" id="8Pa-Vn-Vy9"/>
                             <constraint firstAttribute="trailing" secondItem="e0u-lT-GHZ" secondAttribute="trailing" id="B0z-jt-Xeb"/>
                             <constraint firstItem="olR-Ls-1Cs" firstAttribute="centerX" secondItem="t8o-1y-kY1" secondAttribute="centerX" id="HN3-QG-LTp"/>
+                            <constraint firstItem="3cm-oy-QRQ" firstAttribute="top" secondItem="It3-dA-vPH" secondAttribute="bottom" constant="52" id="MqG-W0-nWC"/>
+                            <constraint firstItem="3cm-oy-QRQ" firstAttribute="centerX" secondItem="t8o-1y-kY1" secondAttribute="centerX" id="Px2-by-gYJ"/>
                             <constraint firstItem="dCz-qP-bC6" firstAttribute="top" secondItem="olR-Ls-1Cs" secondAttribute="bottom" constant="24" id="Scz-Po-103"/>
                             <constraint firstItem="e0u-lT-GHZ" firstAttribute="top" secondItem="t8o-1y-kY1" secondAttribute="top" id="ez7-7j-yaU"/>
                             <constraint firstItem="NO7-j7-9Qg" firstAttribute="top" secondItem="e0u-lT-GHZ" secondAttribute="bottom" id="kE5-mC-JlY"/>
                             <constraint firstItem="Org-XI-lmc" firstAttribute="centerX" secondItem="t8o-1y-kY1" secondAttribute="centerX" id="nEu-Xd-Wcg"/>
                             <constraint firstItem="e0u-lT-GHZ" firstAttribute="leading" secondItem="t8o-1y-kY1" secondAttribute="leading" id="oaY-6P-Tu3"/>
-                            <constraint firstItem="Org-XI-lmc" firstAttribute="top" secondItem="It3-dA-vPH" secondAttribute="bottom" constant="80" id="z6D-mm-9Re"/>
+                            <constraint firstItem="Org-XI-lmc" firstAttribute="top" secondItem="It3-dA-vPH" secondAttribute="bottom" constant="229" id="z6D-mm-9Re"/>
                         </constraints>
                     </view>
                     <connections>

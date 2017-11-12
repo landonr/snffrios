@@ -48,7 +48,6 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: navigationTitleFont, NSForegroundColorAttributeName: UIColor.white]
         // notification setup
         NotificationCenter.default.addObserver(self, selector: #selector(self.pushToUserMesssages(notification:)), name: NSNotification.Name(rawValue: "showUserMessages"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showEmailAlert), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         //right bar button
         let icon = UIImage.init(named: "compose")?.withRenderingMode(.alwaysOriginal)
         var rightButton = UIBarButtonItem.init(image: icon!, style: .plain, target: self, action: #selector(ConversationsVC.showContacts))
@@ -87,12 +86,6 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.items.sort{ $0.lastMessage.timestamp > $1.lastMessage.timestamp }
             DispatchQueue.main.async {
                 self.tableView.reloadData()
-                for conversation in self.items {
-                    if conversation.lastMessage.isRead == false {
-                        self.playSound()
-                        break
-                    }
-                }
             }
         }
     }
@@ -110,32 +103,12 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showExtraView"), object: nil, userInfo: info)
     }
     
-    //Show EmailVerification on the bottom
-    func showEmailAlert() {
-//        User.checkUserVerification {[weak weakSelf = self] (status) in
-//            status == true ? (weakSelf?.alertBottomConstraint.constant = -40) : (weakSelf?.alertBottomConstraint.constant = 0)
-//            UIView.animate(withDuration: 0.3) {
-//                weakSelf?.view.layoutIfNeeded()
-//                weakSelf = nil
-//            }
-//        }
-    }
-    
     //Shows Chat viewcontroller with given user
     func pushToUserMesssages(notification: NSNotification) {
         if let user = notification.userInfo?["user"] as? Dog {
             self.selectedDog = user
             self.performSegue(withIdentifier: "segue", sender: self)
         }
-    }
-    
-    func playSound()  {
-        var soundURL: NSURL?
-        var soundID:SystemSoundID = 0
-//        let filePath = Bundle.main.path(forResource: "newMessage", ofType: "wav")
-//        soundURL = NSURL(fileURLWithPath: filePath!)
-//        AudioServicesCreateSystemSoundID(soundURL!, &soundID)
-//        AudioServicesPlaySystemSound(soundID)
     }
 
     
@@ -151,8 +124,20 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         return 1
     }
     
+    func itemsForMe() -> [Conversation] {
+        var items = [Conversation]()
+        for item in self.items {
+            for dog in DogViewModel.sharedInstance.dogsForMe() {
+                if item.dog?.dogId == dog.dogId {
+                    items.append(item)
+                }
+            }
+        }
+        return items
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        return self.itemsForMe().count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -161,7 +146,7 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ConversationsTBCell
-        let dog = self.items[indexPath.row].dog!
+        let dog = self.itemsForMe()[indexPath.row].dog!
         
         cell.clearCellData()
         cell.profilePic.image = dog.image
@@ -180,21 +165,21 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         
         cell.nameLabel.text = dog.name
-        switch self.items[indexPath.row].lastMessage.type {
+        switch self.itemsForMe()[indexPath.row].lastMessage.type {
         case .text:
-            let message = self.items[indexPath.row].lastMessage.content as! String
+            let message = self.itemsForMe()[indexPath.row].lastMessage.content as! String
             cell.messageLabel.text = message
         case .location:
             cell.messageLabel.text = "Location"
         default:
             cell.messageLabel.text = "Media"
         }
-        let messageDate = Date.init(timeIntervalSince1970: TimeInterval(self.items[indexPath.row].lastMessage.timestamp))
+        let messageDate = Date.init(timeIntervalSince1970: TimeInterval(self.itemsForMe()[indexPath.row].lastMessage.timestamp))
         let dataformatter = DateFormatter.init()
         dataformatter.timeStyle = .short
         let date = dataformatter.string(from: messageDate)
         cell.timeLabel.text = date
-        if self.items[indexPath.row].lastMessage.owner == .sender && self.items[indexPath.row].lastMessage.isRead == false {
+        if self.itemsForMe()[indexPath.row].lastMessage.owner == .sender && self.itemsForMe()[indexPath.row].lastMessage.isRead == false {
             cell.nameLabel.font = UIFont(name:"AvenirNext-DemiBold", size: 17.0)
             cell.messageLabel.font = UIFont(name:"AvenirNext-DemiBold", size: 14.0)
             cell.timeLabel.font = UIFont(name:"AvenirNext-DemiBold", size: 13.0)
@@ -206,8 +191,8 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if DogViewModel.sharedInstance.dogs.count > 0 {
-            //self.selectedUser = self.items[indexPath.row].user
-            self.selectedDog = self.items[indexPath.row].dog
+            //self.selectedUser = self.itemsForMe()[indexPath.row].user
+            self.selectedDog = self.itemsForMe()[indexPath.row].dog
             self.performSegue(withIdentifier: "segue", sender: self)
         }
     }
@@ -221,7 +206,6 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.showEmailAlert()
     }
     
     override func viewWillAppear(_ animated: Bool) {

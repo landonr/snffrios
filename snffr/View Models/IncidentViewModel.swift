@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class IncidentViewModel: NSObject {
     static let sharedInstance = IncidentViewModel()
@@ -25,15 +26,47 @@ class IncidentViewModel: NSObject {
         return dogIncidents
     }
     
-    override init() {
-        super.init()
-
+    func incidentsForMe() -> [Incident] {
+        var dogIncidents = [Incident]()
+        
+        if let _ = UserViewModel.sharedInstance.activeUser?.userId {
+            let myDogs = DogViewModel.sharedInstance.dogsForMe()
+            for incident in self.incidents {
+                for dog in myDogs {
+                    if let incidentId = incident.dogId {
+                        if incidentId == dog.dogId {
+                            dogIncidents.append(incident)
+                        }
+                    }
+                }
+            }
+        } else {
+            dogIncidents.append(contentsOf: self.incidents)
+        }
+        return dogIncidents
+    }
+    
+    func postNewIncident(_ newIncident: Incident) {
+        let dict = newIncident.dictionaryRepresentation()
+        
+        Alamofire.request("http://rezqs.herokuapp.com/api/incidents", method: .post, parameters: dict, encoding: JSONEncoding.default, headers: nil).responseString { (responseString) in
+            self.getIncidents()
+        }
+    }
+    
+    func getIncidents() {
         let getIncidentOperation = GetIncidentOperation() { (response) in
             if let incidents = response {
                 self.incidents = incidents
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newIncident"), object: nil, userInfo: nil)
             }
         }
         
         self.queue.addOperation(getIncidentOperation)
+    }
+    
+    override init() {
+        super.init()
+        self.getIncidents()
     }
 }

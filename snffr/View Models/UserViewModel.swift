@@ -12,6 +12,7 @@ class UserViewModel: NSObject {
     static let sharedInstance = UserViewModel()
     var users = [Foster]()
     var queue = OperationQueue()
+    var activeUser: Foster?
     
     func getUsers() {
         let getUserOperation = GetUserOperation { (users) in
@@ -39,6 +40,15 @@ class UserViewModel: NSObject {
                 if String(userid) == id {
                     return user
                 }
+            }
+        }
+        return nil
+    }
+    
+    func userForSub(id: String) -> Foster? {
+        for user in self.users {
+            if user.auth0Key == id {
+                return user
             }
         }
         return nil

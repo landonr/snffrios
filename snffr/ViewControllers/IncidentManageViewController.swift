@@ -14,7 +14,7 @@ class IncidentManageViewController: UIViewController
     @IBOutlet var tableView: UITableView?
     var queue = OperationQueue()
     var message: Message?
-    var incidents = ["Question", "Medical Update", "Supplies"]
+    var incidentTypes = ["Question", "Medical Update", "Supplies"]
     var activeDog: Dog?
     
     override func viewDidAppear(_ animated: Bool) {
@@ -42,13 +42,13 @@ class IncidentManageViewController: UIViewController
     
     func completeIncident(index: Int) {
         print("complete")
-        IncidentViewModel.sharedInstance.incidents[index].incidentStatusId = 0
+        IncidentViewModel.sharedInstance.incidentsForMe()[index].incidentStatusId = 0
         self.tableView?.reloadData()
     }
     
     func viewProfile(index: Int) {
         print("view profile")
-        let incident = IncidentViewModel.sharedInstance.incidents[index]
+        let incident = IncidentViewModel.sharedInstance.incidentsForMe()[index]
         self.performSegue(withIdentifier: "showProfile", sender: incident)
     }
     
@@ -67,7 +67,7 @@ extension IncidentManageViewController: UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? IncidentManageTVCell {
-            let incident = IncidentViewModel.sharedInstance.incidents[indexPath.row]
+            let incident = IncidentViewModel.sharedInstance.incidentsForMe()[indexPath.row]
             cell.incidentStatusLabel.text = incident.message
             
             let dateFormatter = DateFormatter()
@@ -79,7 +79,7 @@ extension IncidentManageViewController: UITableViewDataSource
             formatter.amSymbol = "AM"
             formatter.pmSymbol = "PM"
             
-            if let dogid = IncidentViewModel.sharedInstance.incidents[indexPath.row].dogId
+            if let dogid = IncidentViewModel.sharedInstance.incidentsForMe()[indexPath.row].dogId
                 , let dog = DogViewModel.sharedInstance.dogForId(id: String(dogid)) {
                 cell.incidentLabel?.text = dog.name
             }
@@ -100,7 +100,7 @@ extension IncidentManageViewController: UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return IncidentViewModel.sharedInstance.incidents.count
+        return IncidentViewModel.sharedInstance.incidentsForMe().count
     }
 }
 
@@ -108,9 +108,9 @@ extension IncidentManageViewController: UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let incident = IncidentViewModel.sharedInstance.incidents[indexPath.row]
+        let incident = IncidentViewModel.sharedInstance.incidentsForMe()[indexPath.row]
         let dog = DogViewModel.sharedInstance.dogForId(id: String(incident.dogId!))
-        let message = self.incidents[incident.incidentTypeId!] + " - " + incident.message!
+        let message = self.incidentTypes[incident.incidentTypeId!] + " - " + incident.message!
         let alertController = UIAlertController(title: dog?.name, message: message, preferredStyle: .alert)
         let profileButton = UIAlertAction(title: "View Profile", style: .default, handler: { (action) in
             self.viewProfile(index: indexPath.row)

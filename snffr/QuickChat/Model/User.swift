@@ -60,8 +60,8 @@ class User: NSObject {
         })
     }
     
-   class func loginUser(withEmail: String, password: String, completion: @escaping (Bool) -> Swift.Void) {
-    Auth.auth().signIn(withEmail: withEmail, password: password, completion: { (user, error) in
+    class func loginUser(withEmail: String, password: String, completion: @escaping (Bool) -> Swift.Void) {
+        Auth.auth().signIn(withEmail: withEmail, password: password, completion: { (user, error) in
             if error == nil {
                 let userInfo = ["email": withEmail, "password": password]
                 UserDefaults.standard.set(userInfo, forKey: "userInformation")

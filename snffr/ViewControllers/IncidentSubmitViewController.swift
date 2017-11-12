@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Alamofire
 class IncidentSubmitViewController: UIViewController
 {
     @IBOutlet var messageLabel: UITextView?
@@ -66,7 +65,7 @@ extension IncidentSubmitViewController: UITableViewDataSource
 }
 
 extension IncidentSubmitViewController: UITableViewDelegate
-{
+{    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newIncident = Incident(message: self.messageString)
         if let dogid = self.message?.dogId {
@@ -74,11 +73,7 @@ extension IncidentSubmitViewController: UITableViewDelegate
         }
         newIncident.incidentTypeId = indexPath.row
         
-        let dict = newIncident.dictionaryRepresentation()
-        
-        Alamofire.request("http://rezqs.herokuapp.com/api/incidents", method: .post, parameters: dict, encoding: JSONEncoding.default, headers: nil).responseString { (responseString) in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newIncident"), object: nil, userInfo: nil)
-        }
+        IncidentViewModel.sharedInstance.postNewIncident(newIncident)
         
         let alertController = UIAlertController(title: "Incident Submitted", message: nil, preferredStyle: .alert)
         let completeButton = UIAlertAction(title: "Ok", style: .default, handler: { (action) in

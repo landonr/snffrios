@@ -306,7 +306,7 @@ extension NavVC: UITableViewDataSource {
         if self.items.count == 0 {
             return 0
         } else {
-            return DogViewModel.sharedInstance.dogs.count
+            return DogViewModel.sharedInstance.dogsForMe().count
         }
     }
     
@@ -315,7 +315,7 @@ extension NavVC: UITableViewDataSource {
             return UITableViewCell()
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactsTVCell
-            let dog = DogViewModel.sharedInstance.dogs[indexPath.row]
+            let dog = DogViewModel.sharedInstance.dogsForMe()[indexPath.row]
             cell.nameLabel.text = dog.name
             cell.profilePic.layer.borderWidth = 2
             cell.profilePic.layer.borderColor = GlobalVariables.purple.cgColor
@@ -325,7 +325,7 @@ extension NavVC: UITableViewDataSource {
                 cell.profilePic.image = image
             } else {
                 cell.profilePic.image = UIImage.init(named: "loading")
-                DogViewModel.sharedInstance.dogs[indexPath.row].downloadImage(indexpathRow: indexPath.row, completion: { (state, index) in
+                DogViewModel.sharedInstance.dogsForMe()[indexPath.row].downloadImage(indexpathRow: indexPath.row, completion: { (state, index) in
                     if state == true {
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
@@ -342,7 +342,7 @@ extension NavVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if self.items.count > 0 {
             self.dismissExtraViews()
-            let userInfo = ["user": DogViewModel.sharedInstance.dogs[indexPath.row]]
+            let userInfo = ["user": DogViewModel.sharedInstance.dogsForMe()[indexPath.row]]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showUserMessages"), object: nil, userInfo: userInfo)
         }
     }

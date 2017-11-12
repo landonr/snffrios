@@ -35,7 +35,6 @@
 		FA60B90C1F7F4F9300B410A4 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60B7D51F7F4DCD00B410A4 /* Conversation.swift */; };
 		FA60B90D1F7F4F9300B410A4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60B7D61F7F4DCD00B410A4 /* Message.swift */; };
 		FA60B90E1F7F4F9300B410A4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60B7D71F7F4DCD00B410A4 /* User.swift */; };
-		FA60B90F1F7F4F9500B410A4 /* newMessage.wav in Resources */ = {isa = PBXBuildFile; fileRef = FA60B7D81F7F4DCD00B410A4 /* newMessage.wav */; };
 		FA60B9101F7F4F9A00B410A4 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60B7DA1F7F4DCD00B410A4 /* ChatVC.swift */; };
 		FA60B9111F7F4F9A00B410A4 /* ConversationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60B7DB1F7F4DCD00B410A4 /* ConversationsVC.swift */; };
 		FA60B9121F7F4F9A00B410A4 /* LandingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA60B7DC1F7F4DCD00B410A4 /* LandingVC.swift */; };
@@ -76,7 +75,6 @@
 		FA60B7D51F7F4DCD00B410A4 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		FA60B7D61F7F4DCD00B410A4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		FA60B7D71F7F4DCD00B410A4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		FA60B7D81F7F4DCD00B410A4 /* newMessage.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = newMessage.wav; sourceTree = "<group>"; };
 		FA60B7DA1F7F4DCD00B410A4 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		FA60B7DB1F7F4DCD00B410A4 /* ConversationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsVC.swift; sourceTree = "<group>"; };
 		FA60B7DC1F7F4DCD00B410A4 /* LandingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingVC.swift; sourceTree = "<group>"; };
@@ -220,7 +218,6 @@
 				FA60B7D01F7F4DCD00B410A4 /* Helper files */,
 				FA60B7D41F7F4DCD00B410A4 /* Model */,
 				FA60B7D91F7F4DCD00B410A4 /* ViewControllers */,
-				FA60B7D81F7F4DCD00B410A4 /* newMessage.wav */,
 			);
 			path = QuickChat;
 			sourceTree = "<group>";
@@ -318,7 +315,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FE0105C1F7C8F7700849203 /* LaunchScreen.storyboard in Resources */,
-				FA60B90F1F7F4F9500B410A4 /* newMessage.wav in Resources */,
 				FA60B90A1F7F4F8900B410A4 /* Main.storyboard in Resources */,
 				8FE010591F7C8F7700849203 /* Assets.xcassets in Resources */,
 				8FE010641F7C95A500849203 /* Auth0.plist in Resources */,

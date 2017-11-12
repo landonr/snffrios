@@ -29,7 +29,7 @@ class LaunchViewController: UIViewController {
         }
     }
     
-    fileprivate func login() {
+    fileprivate func signUp() {
         if let accessToken = getAccessToken() {
             self.getProfile(accessToken)
         } else {
@@ -48,7 +48,7 @@ class LaunchViewController: UIViewController {
                     case .failure(let error):
                         print("Failed with \(error)")
                         self.saveAccesstoken(nil, admin: nil)
-                        self.login()
+                        self.signUp()
                     }
             }
         }
@@ -56,20 +56,19 @@ class LaunchViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let accessToken = getAccessToken() {
-            self.getProfile(accessToken)
-        }
+    }
+    
+    @IBAction func didTapLogin() {
+        signUp()
     }
     
     @IBAction func didTapFosterSignup() {
-        self.saveAccesstoken(nil, admin: nil)
-        login()
+        signUp()
     }
     
     @IBAction func didTapAdminSignup() {
-        self.saveAccesstoken(nil, admin: nil)
         self.admin = true
-        login()
+        signUp()
     }
     
     fileprivate func getAccessToken() -> String? {
@@ -91,54 +90,77 @@ class LaunchViewController: UIViewController {
             .start { result in
                 switch(result) {
                 case .success(let profile):
-                    self.signUpFirebaseWithCredentials(credentials: profile, password: accessToken)
+                    self.loginFirebaseWithCredentials(profile)
                 case .failure( _):
                     self.saveAccesstoken(nil, admin: nil)
-                    self.login()
+                    self.signUp()
                     // Handle the error
                     break;
                 }
         }
     }
     
-    public func simpleRegister(email: String, username: String, password: String, completion: @escaping (Bool) -> Swift.Void) {
-        let image = UIImage(named: "dog1")!
-        User.registerUser(withName: username, email: email, password: password, profilePic: image) { (success) in
-            completion(success)
+    fileprivate func proceedToApp(_ credentials: Auth0.UserInfo) {
+        if !self.admin {
+            if let foster = UserViewModel.sharedInstance.userForSub(id: credentials.sub) {
+                UserViewModel.sharedInstance.activeUser = foster
+                self.performSegue(withIdentifier: "showChat", sender: self)
+            } else {
+                UserViewModel.sharedInstance.updateUser(user: credentials)
+                self.performSegue(withIdentifier: "showChat", sender: self)
+            }
+        } else {
+            self.performSegue(withIdentifier: "showChat", sender: self)
         }
     }
     
-    fileprivate func proceedToApp() {
-        self.performSegue(withIdentifier: "showChat", sender: self)
+    fileprivate func loginFirebaseWithCredentials(_ credentials: Auth0.UserInfo) {
+        var email = ""
+        var password = credentials.sub
+        if !self.admin {
+            if let cemail = credentials.email {
+                email = cemail;
+            } else if let name = credentials.givenName {
+                email = name + "@snffr.com"
+            }
+        } else {
+            email = "patrickullrich@gmail.com"
+            password = "password"
+        }
+        
+        User.loginUser(withEmail: email, password: password) { (success) in
+            if success {
+                self.proceedToApp(credentials)
+            } else {
+                self.signUpFirebaseWithCredentials(credentials: credentials)
+            }
+        }
     }
     
-    func signUpFirebaseWithCredentials(credentials: Auth0.UserInfo, password: String)
+    func signUpFirebaseWithCredentials(credentials: Auth0.UserInfo)
     {
-        var email = "landonroha@gmail.com"
+        var email = ""
         var name = "Foster"
+        var password = credentials.sub
         if !self.admin {
-            if let cemail = credentials.name {
+            if let cemail = credentials.email {
                 email = cemail;
+            } else if let name = credentials.givenName {
+                email = name + "@snffr.com"
             }
             if let nickname = credentials.nickname {
                 name = nickname;
             } else if let nickname = credentials.givenName {
                 name = nickname;
             }
+        } else {
+            email = "patrickullrich@gmail.com"
+            password = "password"
         }
         
-        User.loginUser(withEmail: email, password: "password") { (success) in
+        User.registerUser(withName: name, email: email, password: password, profilePic: #imageLiteral(resourceName: "dog1")) { (success) in
             if success {
-                self.proceedToApp()
-            } else {
-                self.simpleRegister(email: email, username: name, password: "password", completion: { (success) in
-                    if success {
-                        UserViewModel.sharedInstance.updateUser(user: credentials)
-                        self.proceedToApp()
-                    } else {
-                        self.login()
-                    }
-                })
+                self.proceedToApp(credentials)
             }
         }
     }
