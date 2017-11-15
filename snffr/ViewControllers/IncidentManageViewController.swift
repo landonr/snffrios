@@ -43,6 +43,7 @@ class IncidentManageViewController: UIViewController
     func completeIncident(index: Int) {
         print("complete")
         IncidentViewModel.sharedInstance.incidentsForMe()[index].incidentStatusId = 0
+        IncidentViewModel.sharedInstance.updateIncident(IncidentViewModel.sharedInstance.incidentsForMe()[index])
         self.tableView?.reloadData()
     }
     

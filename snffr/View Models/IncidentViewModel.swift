@@ -47,11 +47,17 @@ class IncidentViewModel: NSObject {
     }
     
     func postNewIncident(_ newIncident: Incident) {
-        let dict = newIncident.dictionaryRepresentation()
-        
-        Alamofire.request("http://rezqs.herokuapp.com/api/incidents", method: .post, parameters: dict, encoding: JSONEncoding.default, headers: nil).responseString { (responseString) in
+        let postIncidentOperation = PostIncidentOperation(incident: newIncident) { () in
             self.getIncidents()
         }
+        self.queue.addOperation(postIncidentOperation)
+    }
+    
+    func updateIncident(_ incident: Incident) {
+        let updateIncidentOperation = PutIncidentOperation(incident: incident) { () in
+            self.getIncidents()
+        }
+        self.queue.addOperation(updateIncidentOperation)
     }
     
     func getIncidents() {

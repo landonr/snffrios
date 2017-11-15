@@ -41,8 +41,11 @@ public class Incident: Mappable, NSCoding {
 
   }
     
-    public init(message: String) {
+    public init(message: String, dogId: Int, requestingPartyId: Int, incidentStatusId: Int, incidentTypeId: Int) {
         self.message = message
+        self.requestingPartyId = requestingPartyId
+        self.incidentStatusId = incidentStatusId
+        self.incidentTypeId = incidentTypeId
     }
 
   /// Map a JSON object to this class using ObjectMapper.

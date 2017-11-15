@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8F42E76C1FBBBE8B0083AA6F /* FosterProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F42E76B1FBBBE8B0083AA6F /* FosterProfileViewController.swift */; };
+		8F42E76E1FBBF4C70083AA6F /* PostIncidentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F42E76D1FBBF4C70083AA6F /* PostIncidentOperation.swift */; };
+		8F42E7701FBBF6840083AA6F /* PutIncidentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F42E76F1FBBF6840083AA6F /* PutIncidentOperation.swift */; };
 		8F9954431FAEA91700E3BA09 /* FosterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9954421FAEA91700E3BA09 /* FosterViewModel.swift */; };
 		8F9954451FAEA93B00E3BA09 /* MedicalInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9954441FAEA93B00E3BA09 /* MedicalInfoViewModel.swift */; };
 		8F9954471FAEA99100E3BA09 /* GetUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9954461FAEA99100E3BA09 /* GetUserOperation.swift */; };
@@ -47,6 +49,8 @@
 /* Begin PBXFileReference section */
 		54385D343A26F61C0EACC5B4 /* Pods-snffr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-snffr.release.xcconfig"; path = "Pods/Target Support Files/Pods-snffr/Pods-snffr.release.xcconfig"; sourceTree = "<group>"; };
 		8F42E76B1FBBBE8B0083AA6F /* FosterProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FosterProfileViewController.swift; sourceTree = "<group>"; };
+		8F42E76D1FBBF4C70083AA6F /* PostIncidentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostIncidentOperation.swift; sourceTree = "<group>"; };
+		8F42E76F1FBBF6840083AA6F /* PutIncidentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutIncidentOperation.swift; sourceTree = "<group>"; };
 		8F9954421FAEA91700E3BA09 /* FosterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FosterViewModel.swift; sourceTree = "<group>"; };
 		8F9954441FAEA93B00E3BA09 /* MedicalInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalInfoViewModel.swift; sourceTree = "<group>"; };
 		8F9954461FAEA99100E3BA09 /* GetUserOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserOperation.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				FA4E7CED1F7FF4E300CFBABA /* GetIncidentOperation.swift */,
+				8F42E76D1FBBF4C70083AA6F /* PostIncidentOperation.swift */,
+				8F42E76F1FBBF6840083AA6F /* PutIncidentOperation.swift */,
 				FA4E7CFD1F80277D00CFBABA /* GetDogOperation.swift */,
 				8F9954481FAEA9B000E3BA09 /* GetMedicalInfoOperation.swift */,
 				8F9954461FAEA99100E3BA09 /* GetUserOperation.swift */,
@@ -405,6 +411,7 @@
 				8FE010541F7C8F7700849203 /* LaunchViewController.swift in Sources */,
 				FA4B6A2C1F80686B00AD2B05 /* Medical.swift in Sources */,
 				FA4E7D001F802B3800CFBABA /* DogViewModel.swift in Sources */,
+				8F42E76E1FBBF4C70083AA6F /* PostIncidentOperation.swift in Sources */,
 				8F99544D1FAF87FE00E3BA09 /* OperationViewModel.swift in Sources */,
 				FA60B90E1F7F4F9300B410A4 /* User.swift in Sources */,
 				FA60B90D1F7F4F9300B410A4 /* Message.swift in Sources */,
@@ -417,6 +424,7 @@
 				8FE010521F7C8F7700849203 /* AppDelegate.swift in Sources */,
 				8F9954471FAEA99100E3BA09 /* GetUserOperation.swift in Sources */,
 				FA4E7CFC1F80272300CFBABA /* Dog.swift in Sources */,
+				8F42E7701FBBF6840083AA6F /* PutIncidentOperation.swift in Sources */,
 				FA4E7CE71F7F627A00CFBABA /* DogProfileViewController.swift in Sources */,
 				FA4E7CFE1F80277D00CFBABA /* GetDogOperation.swift in Sources */,
 				8F99544F1FAFC3F100E3BA09 /* PostUserOperation.swift in Sources */,

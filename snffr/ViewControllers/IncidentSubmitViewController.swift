@@ -67,13 +67,16 @@ extension IncidentSubmitViewController: UITableViewDataSource
 extension IncidentSubmitViewController: UITableViewDelegate
 {    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newIncident = Incident(message: self.messageString)
         if let dogid = self.message?.dogId {
-            newIncident.dogId = Int(dogid)
+            if let dog = DogViewModel.sharedInstance.dogForId(id: dogid) {
+                if let careGiverId = dog.careGiverId,
+                    let dogid = dog.dogId {
+                    let newIncident = Incident(message: self.messageString, dogId: dogid, requestingPartyId: careGiverId, incidentStatusId: 0, incidentTypeId: indexPath.row)
+                    IncidentViewModel.sharedInstance.postNewIncident(newIncident)
+                }
+            }
         }
-        newIncident.incidentTypeId = indexPath.row
         
-        IncidentViewModel.sharedInstance.postNewIncident(newIncident)
         
         let alertController = UIAlertController(title: "Incident Submitted", message: nil, preferredStyle: .alert)
         let completeButton = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
