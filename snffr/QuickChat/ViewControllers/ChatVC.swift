@@ -341,7 +341,7 @@ class ChatVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "ShowProfile") {
-            if let vc = segue.destination as? ProfileViewController {
+            if let vc = segue.destination as? DogProfileViewController {
                 vc.profileId = self.dogid
                 vc.activedoggo = self.currentDog
             }

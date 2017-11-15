@@ -102,11 +102,11 @@ class LaunchViewController: UIViewController {
     
     fileprivate func proceedToApp(_ credentials: Auth0.UserInfo) {
         if !self.admin {
-            if let foster = UserViewModel.sharedInstance.userForSub(id: credentials.sub) {
-                UserViewModel.sharedInstance.activeUser = foster
+            if let foster = FosterViewModel.sharedInstance.userForSub(id: credentials.sub) {
+                FosterViewModel.sharedInstance.activeUser = foster
                 self.performSegue(withIdentifier: "showChat", sender: self)
             } else {
-                UserViewModel.sharedInstance.updateUser(user: credentials)
+                FosterViewModel.sharedInstance.updateUser(user: credentials)
                 self.performSegue(withIdentifier: "showChat", sender: self)
             }
         } else {
@@ -140,7 +140,7 @@ class LaunchViewController: UIViewController {
     func signUpFirebaseWithCredentials(credentials: Auth0.UserInfo)
     {
         var email = ""
-        var name = "Foster"
+        var name = "Admin"
         var password = credentials.sub
         if !self.admin {
             if let cemail = credentials.email {

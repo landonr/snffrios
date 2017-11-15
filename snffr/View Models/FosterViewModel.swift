@@ -8,8 +8,8 @@
 
 import Foundation
 import Auth0
-class UserViewModel: NSObject {
-    static let sharedInstance = UserViewModel()
+class FosterViewModel: NSObject {
+    static let sharedInstance = FosterViewModel()
     var users = [Foster]()
     var queue = OperationQueue()
     var activeUser: Foster?

@@ -54,7 +54,7 @@ class IncidentManageViewController: UIViewController
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showProfile" {
-            if let vc = segue.destination as? ProfileViewController,
+            if let vc = segue.destination as? DogProfileViewController,
                 let incident = sender as? Incident,
                 let dogId = incident.dogId {
                 vc.activedoggo = DogViewModel.sharedInstance.dogForId(id: String(dogId))

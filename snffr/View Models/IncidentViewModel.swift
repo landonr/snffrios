@@ -29,7 +29,7 @@ class IncidentViewModel: NSObject {
     func incidentsForMe() -> [Incident] {
         var dogIncidents = [Incident]()
         
-        if let _ = UserViewModel.sharedInstance.activeUser?.userId {
+        if let _ = FosterViewModel.sharedInstance.activeUser?.userId {
             let myDogs = DogViewModel.sharedInstance.dogsForMe()
             for incident in self.incidents {
                 for dog in myDogs {

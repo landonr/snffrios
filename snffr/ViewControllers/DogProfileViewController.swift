@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  DogProfileViewController.swift
 //  snffr
 //
 //  Created by Landon Rohatensky on 2017-09-29.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ProfileViewController: UIViewController
+class DogProfileViewController: UIViewController
 {
     @IBOutlet var nameLabel: UILabel?
     @IBOutlet var profilePicture: UIImageView?
@@ -35,9 +35,18 @@ class ProfileViewController: UIViewController
         self.nameLabel?.text = self.activedoggo?.name
         self.profilePicture?.image = self.activedoggo?.image
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showFoster" {
+            if let vc = segue.destination as? FosterProfileViewController,
+                let fosterid = self.activedoggo?.careGiverId {
+                vc.activeFoster = FosterViewModel.sharedInstance.userForId(id: String(fosterid))
+            }
+        }
+    }
 }
 
-extension ProfileViewController: UITableViewDataSource {
+extension DogProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MedicalInfoViewModel.sharedInstance.medicalsForInfoTypeIdAndDogId(section+1, dogId: (self.activedoggo?.dogId)!).count
     }

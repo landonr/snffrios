@@ -24,7 +24,7 @@ class DogViewModel: NSObject {
     
     func dogsForMe() -> [Dog] {
         var dogs = [Dog]()
-        if let fosterId = UserViewModel.sharedInstance.activeUser?.userId {
+        if let fosterId = FosterViewModel.sharedInstance.activeUser?.userId {
             for dog in self.dogs {
                 if dog.careGiverId == fosterId {
                     dogs.append(dog)

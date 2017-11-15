@@ -14,7 +14,7 @@ class OperationViewModel: NSObject {
     override init() {
         super.init()
         _ = DogViewModel.sharedInstance
-        _ = UserViewModel.sharedInstance
+        _ = FosterViewModel.sharedInstance
         _ = MedicalInfoViewModel.sharedInstance
         _ = IncidentViewModel.sharedInstance
     }

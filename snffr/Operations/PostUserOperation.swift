@@ -42,7 +42,7 @@ class PostUserOperation: Operation {
         if let authKey = userInfo?.sub {
             foster?.auth0Key = authKey
         }
-        UserViewModel.sharedInstance.activeUser = foster
+        FosterViewModel.sharedInstance.activeUser = foster
         Alamofire.request("http://rezqs.herokuapp.com/api/users", method: .post, parameters: foster?.dictionaryRepresentation()).response { (response) in
             self.completion()
         }
