@@ -40,10 +40,9 @@ class Message {
     
     //MARK: Methods
     class func downloadAllMessages(forUserID: String, completion: @escaping (Message) -> Swift.Void) {
-        if let currentUserID = Auth.auth().currentUser?.uid {
-            Database.database().reference().child("users").child(currentUserID).child("conversations").child(forUserID).observe(.value, with: { (snapshot) in
-                if snapshot.exists() {
-                    let data = snapshot.value as! [String: String]
+        Database.database().reference().child("users").child(forUserID).child("conversations").child(forUserID).observe(.value, with: { (snapshot) in
+            if snapshot.exists() {
+                if let data = snapshot.value as? [String: String] {
                     let location = data["location"]!
                     Database.database().reference().child("conversations").child(location).observe(.childAdded, with: { (snap) in
                         if snap.exists() {
@@ -58,23 +57,38 @@ class Message {
                             default: break
                             }
                             let content = receivedMessage["content"] as! String
-                            let fromID = receivedMessage["fromID"] as! String
+                            var fromID = ""
+                            if let fromId = receivedMessage["fromID"] as? String {
+                                fromID = fromId
+                            } else if let fromId = receivedMessage["fromID"] as? Int {
+                                fromID = String(describing: fromId)
+                            }
                             var timestamp = 0
                             if let imestamp = receivedMessage["timestamp"] as? Int {
                                 timestamp = imestamp
                             }
-                            if fromID == currentUserID {
-                                let message = Message.init(type: type, content: content, owner: .receiver, timestamp: timestamp, isRead: true)
-                                completion(message)
+                            if FosterViewModel.sharedInstance.activeUser != nil {
+                                if fromID == forUserID {
+                                    let message = Message.init(type: type, content: content, owner: .sender, timestamp: timestamp, isRead: true)
+                                    completion(message)
+                                } else {
+                                    let message = Message.init(type: type, content: content, owner: .receiver, timestamp: timestamp, isRead: true)
+                                    completion(message)
+                                }
                             } else {
-                                let message = Message.init(type: type, content: content, owner: .sender, timestamp: timestamp, isRead: true)
-                                completion(message)
+                                if fromID != forUserID {
+                                    let message = Message.init(type: type, content: content, owner: .sender, timestamp: timestamp, isRead: true)
+                                    completion(message)
+                                } else {
+                                    let message = Message.init(type: type, content: content, owner: .receiver, timestamp: timestamp, isRead: true)
+                                    completion(message)
+                                }
                             }
                         }
                     })
                 }
-            })
-        }
+            }
+        })
     }
     
     func downloadImage(indexpathRow: Int, completion: @escaping (Bool, Int) -> Swift.Void)  {
@@ -113,43 +127,49 @@ class Message {
     }
    
     func downloadLastMessage(forLocation: String, completion: @escaping () -> Swift.Void) {
-        if let currentUserID = Auth.auth().currentUser?.uid {
-            Database.database().reference().child("conversations").child(forLocation).observe(.value, with: { (snapshot) in
-                if snapshot.exists() {
-                    for snap in snapshot.children {
-                        let receivedMessage = (snap as! DataSnapshot).value as! [String: Any]
-                        self.content = receivedMessage["content"]!
-                        if let timestamp = receivedMessage["timestamp"] as? Int {
-                            self.timestamp = timestamp
-                        }
-                        let messageType = receivedMessage["type"] as! String
-                        let fromID = receivedMessage["fromID"] as! String
-                        self.isRead = receivedMessage["isRead"] as! Bool
-                        var type = MessageType.text
-                        switch messageType {
-                        case "text":
-                            type = .text
-                        case "photo":
-                            type = .photo
-                        case "location":
-                            type = .location
-                        default: break
-                        }
-                        self.type = type
-                        if currentUserID == fromID {
-                            self.owner = .receiver
-                        } else {
-                            self.owner = .sender
-                        }
-                        completion()
+        Database.database().reference().child("conversations").child(forLocation).observe(.value, with: { (snapshot) in
+            if snapshot.exists() {
+                for snap in snapshot.children {
+                    let receivedMessage = (snap as! DataSnapshot).value as! [String: Any]
+                    self.content = receivedMessage["content"]!
+                    if let timestamp = receivedMessage["timestamp"] as? Int {
+                        self.timestamp = timestamp
                     }
+                    let messageType = receivedMessage["type"] as! String
+                    var fromID = ""
+                    if let fromId = receivedMessage["fromID"] as? String {
+                        fromID = fromId
+                    } else if let fromId = receivedMessage["fromID"] as? Int {
+                        fromID = String(describing: fromId)
+                    }
+                    self.isRead = receivedMessage["isRead"] as! Bool
+                    var type = MessageType.text
+                    switch messageType {
+                    case "text":
+                        type = .text
+                    case "photo":
+                        type = .photo
+                    case "location":
+                        type = .location
+                    default: break
+                    }
+                    self.type = type
+                    if fromID != fromID && FosterViewModel.sharedInstance.activeUser != nil {
+                        self.owner = .receiver
+                    } else {
+                        self.owner = .sender
+                    }
+                    completion()
                 }
-            })
-        }
+            }
+        })
     }
 
     class func send(message: Message, toID: String, completion: @escaping (Bool) -> Swift.Void)  {
-        if let currentUserID = Auth.auth().currentUser?.uid {
+        if var currentUserID = Auth.auth().currentUser?.uid {
+            if FosterViewModel.sharedInstance.activeUser == nil {
+                currentUserID = toID
+            }
             switch message.type {
             case .location:
                 let values = ["type": "location", "content": message.content, "fromID": currentUserID, "toID": toID, "timestamp": message.timestamp, "isRead": false]
@@ -178,28 +198,25 @@ class Message {
     }
     
     class func uploadMessage(withValues: [String: Any], toID: String, completion: @escaping (Bool) -> Swift.Void) {
-        if let currentUserID = Auth.auth().currentUser?.uid {
-            Database.database().reference().child("users").child(currentUserID).child("conversations").child(toID).observeSingleEvent(of: .value, with: { (snapshot) in
-                if snapshot.exists() {
-                    let data = snapshot.value as! [String: String]
-                    let location = data["location"]!
-                    Database.database().reference().child("conversations").child(location).childByAutoId().setValue(withValues, withCompletionBlock: { (error, _) in
-                        if error == nil {
-                            completion(true)
-                        } else {
-                            completion(false)
-                        }
-                    })
-                } else {
-                    Database.database().reference().child("conversations").childByAutoId().childByAutoId().setValue(withValues, withCompletionBlock: { (error, reference) in
-                        let data = ["location": reference.parent!.key]
-                        Database.database().reference().child("users").child(currentUserID).child("conversations").child(toID).updateChildValues(data)
-                        Database.database().reference().child("users").child(toID).child("conversations").child(currentUserID).updateChildValues(data)
+        Database.database().reference().child("users").child(toID).child("conversations").child(toID).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.exists() {
+                let data = snapshot.value as! [String: String]
+                let location = data["location"]!
+                Database.database().reference().child("conversations").child(location).childByAutoId().setValue(withValues, withCompletionBlock: { (error, _) in
+                    if error == nil {
                         completion(true)
-                    })
-                }
-            })
-        }
+                    } else {
+                        completion(false)
+                    }
+                })
+            } else {
+                Database.database().reference().child("conversations").childByAutoId().childByAutoId().setValue(withValues, withCompletionBlock: { (error, reference) in
+                    let data = ["location": reference.parent!.key]
+                    Database.database().reference().child("users").child(toID).child("conversations").child(toID).updateChildValues(data)
+                    completion(true)
+                })
+            }
+        })
     }
     
     //MARK: Inits

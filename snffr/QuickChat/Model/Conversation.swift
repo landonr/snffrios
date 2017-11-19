@@ -54,15 +54,14 @@ class Conversation {
     }
     
     //MARK: Methods
-    class func showConversationsForDog(completion: @escaping ([Conversation]) -> Swift.Void) {
-        if let currentUserID = Auth.auth().currentUser?.uid {
+    class func showConversationsForDog(_ dog: Dog, completion: @escaping ([Conversation]) -> Swift.Void) {
+        if let dogId = dog.dogId {
             var conversations = [Conversation]()
-            Database.database().reference().child("users").child(currentUserID).child("conversations").observe(.childAdded, with: { (snapshot) in
+            Database.database().reference().child("users").child(String(describing: dogId)).child("conversations").observe(.childAdded, with: { (snapshot) in
                 if snapshot.exists() {
-                    let fromID = snapshot.key
                     let values = snapshot.value as! [String: String]
                     let location = values["location"]!
-                    if let dog = DogViewModel.sharedInstance.dogForId(id: fromID) {
+                    if let dog = DogViewModel.sharedInstance.dogForId(id: String(describing: dogId)) {
                         let emptyMessage = Message.init(type: .text, content: "loading", owner: .sender, timestamp: 0, isRead: true)
                         let conversation = Conversation.init(dog: dog, lastMessage: emptyMessage)
                         conversations.append(conversation)

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "House.dictionaryRepresentation():House.swift">
+      </ContextState>
+      <ContextState
+         contextName = "FosterProfileViewController.tableView(_:didSelectRowAt:):FosterProfileViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "FosterProfileViewController.didTapSaveButton():FosterProfileViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in static Conversation.showConversationsForDog(_:completion:):Conversation.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Foster.dictionaryRepresentation():Foster.swift">
+      </ContextState>
+      <ContextState
+         contextName = "FosterViewModel.userForId(id:):FosterViewModel.swift">
+      </ContextState>
+      <ContextState
+         contextName = "PostUserOperation.postUser():PostUserOperation.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Address.dictionaryRepresentation():Address.swift">
+      </ContextState>
+      <ContextState
+         contextName = "static Conversation.showConversationsForDog(_:completion:):Conversation.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #2 in PostUserOperation.postUser():PostUserOperation.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

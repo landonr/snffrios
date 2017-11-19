@@ -81,11 +81,31 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     //Downloads conversations
     func fetchData() {
-        Conversation.showConversations { (conversations) in
-            self.items = conversations
-            self.items.sort{ $0.lastMessage.timestamp > $1.lastMessage.timestamp }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+//        Conversation.showConversations { (conversations) in
+//            self.items = conversations
+//            self.items.sort{ $0.lastMessage.timestamp > $1.lastMessage.timestamp }
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
+        self.items = [Conversation]()
+        for dog in DogViewModel.sharedInstance.dogsForMe() {
+            Conversation.showConversationsForDog(dog) { (conversations) in
+                if let conversation = conversations.first {
+                    var dupe = false
+                    for convo in self.items {
+                        if convo.dog?.dogId == conversation.dog?.dogId {
+                            dupe = true
+                        }
+                    }
+                    if !dupe {
+                        self.items.append(conversation)
+                        self.items.sort{ $0.lastMessage.timestamp > $1.lastMessage.timestamp }
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
             }
         }
     }

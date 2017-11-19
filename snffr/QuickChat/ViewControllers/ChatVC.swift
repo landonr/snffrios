@@ -319,7 +319,7 @@ class ChatVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         self.inputBar.backgroundColor = UIColor.clear
         self.view.layoutIfNeeded()
         NotificationCenter.default.addObserver(self, selector: #selector(ChatVC.showKeyboard(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        if self.items.count > 0 {
+        if self.items.count > 1 {
             self.tableView.scrollToRow(at: IndexPath.init(row: self.items.count - 1, section: 0), at: .bottom, animated: true)
         }
     }

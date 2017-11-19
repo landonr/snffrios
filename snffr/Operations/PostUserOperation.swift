@@ -53,8 +53,11 @@ class PostUserOperation: Operation {
             }
         } else {
             FosterViewModel.sharedInstance.activeUser = self.foster
-            Alamofire.request("http://rezqs.herokuapp.com/api/users", method: .put, parameters: self.foster?.dictionaryRepresentation()).response { (response) in
-                self.completion()
+            self.foster?.lastName = "rohat"
+            if let userId = self.foster?.userId {
+                Alamofire.request("http://rezqs.herokuapp.com/api/users/\(userId)", method: .put, parameters: self.foster?.dictionaryRepresentation()).responseString { (response) in
+                    self.completion()
+                }
             }
         }
     }
