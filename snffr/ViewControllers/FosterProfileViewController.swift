@@ -14,12 +14,8 @@ class FosterProfileViewController: UIViewController
     @IBOutlet var nameLabel: UILabel?
     @IBOutlet var tableView: UITableView!
     
-    let sections = ["Medical", "Vaccinations", "Training"]
-    let trainingArray = ["3 years of doggo university", "not trained", "phd in being a good boye."]
-    let medicalArray = ["Broken hip in 2014", "Very Healthy", "Underweight"]
-    let vaccinationArray = ["All the shots", "the good shots", "no shots"]
+    let sections = ["Address", "House", "Phone"]
     
-    var profileId: String?
     var activeFoster: Foster?
     
     override func viewDidAppear(_ animated: Bool) {
@@ -34,11 +30,48 @@ class FosterProfileViewController: UIViewController
             self.nameLabel?.text = firstName + " " + lastName
         }
     }
+    
+    @IBAction func didTapSaveButton() {
+        if let foster = self.activeFoster {
+            let address = Address()
+            let house = House()
+            let phone = Phone()
+            if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? FosterProfileViewTableViewCell {
+                address.addressLine1 = cell.textField?.text
+            }
+            if let cell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? FosterProfileViewTableViewCell {
+                address.city = cell.textField?.text
+            }
+            if let cell = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FosterProfileViewTableViewCell {
+                address.postalCode = cell.textField?.text
+            }
+            if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? FosterProfileViewTableViewCell {
+                if let feetText = cell.textField?.text,
+                    let squareFeet = Int(feetText) {
+                    house.squareFeet = squareFeet
+                }
+            }
+            if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as? FosterProfileViewTableViewCell {
+                phone.phoneNumber = cell.textField?.text
+            }
+            foster.address = address
+            foster.phone = phone
+            foster.house = house
+            self.activeFoster = foster
+            FosterViewModel.sharedInstance.updateFoster(foster: foster)
+        }
+    }
 }
 
 extension FosterProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return MedicalInfoViewModel.sharedInstance.medicalsForInfoTypeIdAndDogId(section+1, dogId: (self.activedoggo?.dogId)!).count
+        if section == 0 {
+            return 3
+        } else if section == 1 {
+            return 1
+        } else if section == 2 {
+            return 1
+        }
         return 0
     }
     
@@ -51,8 +84,54 @@ extension FosterProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        //cell.textLabel?.text = MedicalInfoViewModel.sharedInstance.medicalsForInfoTypeIdAndDogId(indexPath.section+1, dogId: (self.activedoggo?.dogId)!)[indexPath.row].info
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell") as? FosterProfileViewTableViewCell {
+            if let foster = self.activeFoster {
+                cell.textField?.delegate = self
+                if indexPath.section == 0 {
+                    if indexPath.row == 0 {
+                        cell.titleLabel.text = "Address"
+                        cell.textField?.text = foster.address?.addressLine1
+                    } else if indexPath.row == 1 {
+                        cell.titleLabel.text = "City"
+                        cell.textField?.text = foster.address?.city
+                    } else if indexPath.row == 2 {
+                        cell.titleLabel.text = "Postal Code"
+                        cell.textField?.text = foster.address?.postalCode
+                    }
+                } else if indexPath.section == 1 {
+                    cell.titleLabel.text = "Square Feet"
+                    if let squareFeet = foster.house?.squareFeet {
+                        cell.textField?.text = String(describing: squareFeet)
+                    }
+                } else if indexPath.section == 2 {
+                    cell.titleLabel.text = "Phone Number"
+                    cell.textField?.text = foster.phone?.phoneNumber
+                }
+            }
+            return cell
+        }
+        return UITableViewCell()
     }
+}
+
+extension FosterProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell") as? FosterProfileViewTableViewCell {
+            cell.textField?.becomeFirstResponder()
+        }
+    }
+}
+
+extension FosterProfileViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+class FosterProfileViewTableViewCell: UITableViewCell
+{
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var textField: UITextField!
 }

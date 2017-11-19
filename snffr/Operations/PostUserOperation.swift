@@ -15,6 +15,7 @@ class PostUserOperation: Operation {
     
     fileprivate var completion: (() -> Void)!
     var userInfo: UserInfo?
+    var foster: Foster?
     enum PostUserOperationError: Error {
         case busted
     }
@@ -24,27 +25,37 @@ class PostUserOperation: Operation {
         self.completion = completionBlock
     }
     
+    init(_ foster: Foster, completionBlock: @escaping (() -> Void)) {
+        self.foster = foster
+        self.completion = completionBlock
+    }
+    
     override func start() {
         postUser()
     }
     
     func postUser() {
-        let foster = Foster(JSONString: "{\"userId\":1,\"auth0Key\":null,\"firstName\":\"Jon\",\"lastName\":\"Doe\",\"userTypeId\":1,\"addressId\":null,\"phoneId\":null,\"houseId\":null,\"created_at\":null,\"updated_at\":null,\"version\":0}")
-        
-        if let firstName = userInfo?.givenName {
-            foster?.firstName = firstName
-        } else if let nickname = userInfo?.nickname {
-            foster?.firstName = nickname
-        }
-        if let familyName = userInfo?.familyName {
-            foster?.lastName = familyName
-        }
-        if let authKey = userInfo?.sub {
-            foster?.auth0Key = authKey
-        }
-        FosterViewModel.sharedInstance.activeUser = foster
-        Alamofire.request("http://rezqs.herokuapp.com/api/users", method: .post, parameters: foster?.dictionaryRepresentation()).response { (response) in
-            self.completion()
+        if let userInfo = self.userInfo {
+            let foster = Foster(JSONString: "{\"userId\":1,\"auth0Key\":null,\"firstName\":\"Jon\",\"lastName\":\"Doe\",\"userTypeId\":1,\"addressId\":null,\"phoneId\":null,\"houseId\":null,\"created_at\":null,\"updated_at\":null,\"version\":0}")
+            
+            if let firstName = userInfo.givenName {
+                foster?.firstName = firstName
+            } else if let nickname = userInfo.nickname {
+                foster?.firstName = nickname
+            }
+            if let familyName = userInfo.familyName {
+                foster?.lastName = familyName
+            }
+            foster?.auth0Key = userInfo.sub
+            FosterViewModel.sharedInstance.activeUser = foster
+            Alamofire.request("http://rezqs.herokuapp.com/api/users", method: .post, parameters: foster?.dictionaryRepresentation()).response { (response) in
+                self.completion()
+            }
+        } else {
+            FosterViewModel.sharedInstance.activeUser = self.foster
+            Alamofire.request("http://rezqs.herokuapp.com/api/users", method: .put, parameters: self.foster?.dictionaryRepresentation()).response { (response) in
+                self.completion()
+            }
         }
     }
 }
