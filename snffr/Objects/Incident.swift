@@ -27,7 +27,7 @@ public class Incident: Mappable, NSCoding {
   public var dogId: Int?
   public var requestingPartyId: Int?
   public var incidentTypeId: Int?
-  public var incidentStatusId: Int?
+  public var incidentStatusId = 1
   public var createdAt: String?
   public var version: Int?
   public var message: String?
@@ -38,7 +38,7 @@ public class Incident: Mappable, NSCoding {
   ///
   /// - parameter map: A mapping from ObjectMapper.
   public required init?(map: Map){
-
+    
   }
     
     public init(message: String, dogId: Int, requestingPartyId: Int, incidentStatusId: Int, incidentTypeId: Int) {
@@ -46,6 +46,7 @@ public class Incident: Mappable, NSCoding {
         self.requestingPartyId = requestingPartyId
         self.incidentStatusId = incidentStatusId
         self.incidentTypeId = incidentTypeId
+        self.dogId = dogId
     }
 
   /// Map a JSON object to this class using ObjectMapper.
@@ -72,7 +73,7 @@ public class Incident: Mappable, NSCoding {
     if let value = dogId { dictionary[SerializationKeys.dogId] = value }
     if let value = requestingPartyId { dictionary[SerializationKeys.requestingPartyId] = value }
     if let value = incidentTypeId { dictionary[SerializationKeys.incidentTypeId] = value }
-    if let value = incidentStatusId { dictionary[SerializationKeys.incidentStatusId] = value }
+    dictionary[SerializationKeys.incidentStatusId] = incidentStatusId
     if let value = createdAt { dictionary[SerializationKeys.createdAt] = value }
     if let value = version { dictionary[SerializationKeys.version] = value }
     if let value = message { dictionary[SerializationKeys.message] = value }
@@ -86,7 +87,9 @@ public class Incident: Mappable, NSCoding {
     self.dogId = aDecoder.decodeObject(forKey: SerializationKeys.dogId) as? Int
     self.requestingPartyId = aDecoder.decodeObject(forKey: SerializationKeys.requestingPartyId) as? Int
     self.incidentTypeId = aDecoder.decodeObject(forKey: SerializationKeys.incidentTypeId) as? Int
-    self.incidentStatusId = aDecoder.decodeObject(forKey: SerializationKeys.incidentStatusId) as? Int
+    if let incidentStatusId = aDecoder.decodeObject(forKey: SerializationKeys.incidentStatusId) as? Int  {
+        self.incidentStatusId = incidentStatusId
+    }
     self.createdAt = aDecoder.decodeObject(forKey: SerializationKeys.createdAt) as? String
     self.version = aDecoder.decodeObject(forKey: SerializationKeys.version) as? Int
     self.message = aDecoder.decodeObject(forKey: SerializationKeys.message) as? String

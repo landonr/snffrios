@@ -36,6 +36,7 @@ class IncidentViewModel: NSObject {
                     if let incidentId = incident.dogId {
                         if incidentId == dog.dogId {
                             dogIncidents.append(incident)
+                            break
                         }
                     }
                 }
@@ -63,7 +64,20 @@ class IncidentViewModel: NSObject {
     func getIncidents() {
         let getIncidentOperation = GetIncidentOperation() { (response) in
             if let incidents = response {
-                self.incidents = incidents
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                self.incidents = incidents.sorted {
+                    if $0.incidentStatusId <= $1.incidentStatusId {
+                        if let firstDateString = $0.createdAt,
+                            let secondDateString = $1.createdAt,
+                            let firstDate = dateFormatter.date(from: firstDateString),
+                            let secondDate = dateFormatter.date(from: secondDateString) {
+                            return firstDate.compare(secondDate) == .orderedDescending
+                        }
+                        return false
+                    }
+                    return true
+                }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newIncident"), object: nil, userInfo: nil)
             }
         }

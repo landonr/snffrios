@@ -71,7 +71,7 @@ extension IncidentSubmitViewController: UITableViewDelegate
             if let dog = DogViewModel.sharedInstance.dogForId(id: dogid) {
                 if let careGiverId = dog.careGiverId,
                     let dogid = dog.dogId {
-                    let newIncident = Incident(message: self.messageString, dogId: dogid, requestingPartyId: careGiverId, incidentStatusId: 0, incidentTypeId: indexPath.row)
+                    let newIncident = Incident(message: self.messageString, dogId: dogid, requestingPartyId: careGiverId, incidentStatusId: 1, incidentTypeId: indexPath.row)
                     IncidentViewModel.sharedInstance.postNewIncident(newIncident)
                 }
             }
