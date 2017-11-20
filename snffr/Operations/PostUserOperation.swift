@@ -15,18 +15,13 @@ class PostUserOperation: Operation {
     
     fileprivate var completion: (() -> Void)!
     var userInfo: UserInfo?
-    var foster: Foster?
+
     enum PostUserOperationError: Error {
         case busted
     }
     
     init(_ userInfo: UserInfo, completionBlock: @escaping (() -> Void)) {
         self.userInfo = userInfo
-        self.completion = completionBlock
-    }
-    
-    init(_ foster: Foster, completionBlock: @escaping (() -> Void)) {
-        self.foster = foster
         self.completion = completionBlock
     }
     
@@ -50,14 +45,6 @@ class PostUserOperation: Operation {
             FosterViewModel.sharedInstance.activeUser = foster
             Alamofire.request("http://rezqs.herokuapp.com/api/users", method: .post, parameters: foster?.dictionaryRepresentation()).response { (response) in
                 self.completion()
-            }
-        } else {
-            FosterViewModel.sharedInstance.activeUser = self.foster
-            self.foster?.lastName = "rohat"
-            if let userId = self.foster?.userId {
-                Alamofire.request("http://rezqs.herokuapp.com/api/users/\(userId)", method: .put, parameters: self.foster?.dictionaryRepresentation()).responseString { (response) in
-                    self.completion()
-                }
             }
         }
     }

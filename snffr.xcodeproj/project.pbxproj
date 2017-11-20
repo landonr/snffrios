@@ -20,6 +20,7 @@
 		8FBB7E521FC11A0F009F2F55 /* Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBB7E4F1FC11A0D009F2F55 /* Phone.swift */; };
 		8FBB7E531FC11A0F009F2F55 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBB7E501FC11A0D009F2F55 /* Address.swift */; };
 		8FBB7E541FC11A0F009F2F55 /* House.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBB7E511FC11A0E009F2F55 /* House.swift */; };
+		8FBB7E581FC24EE9009F2F55 /* UpdateUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBB7E571FC24EE9009F2F55 /* UpdateUserOperation.swift */; };
 		8FE010521F7C8F7700849203 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE010511F7C8F7700849203 /* AppDelegate.swift */; };
 		8FE010541F7C8F7700849203 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE010531F7C8F7700849203 /* LaunchViewController.swift */; };
 		8FE010591F7C8F7700849203 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FE010581F7C8F7700849203 /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 		8FBB7E4F1FC11A0D009F2F55 /* Phone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Phone.swift; sourceTree = "<group>"; };
 		8FBB7E501FC11A0D009F2F55 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		8FBB7E511FC11A0E009F2F55 /* House.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = House.swift; sourceTree = "<group>"; };
+		8FBB7E571FC24EE9009F2F55 /* UpdateUserOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserOperation.swift; sourceTree = "<group>"; };
 		8FE0104E1F7C8F7700849203 /* snffr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = snffr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE010511F7C8F7700849203 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FE010531F7C8F7700849203 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				8F9954481FAEA9B000E3BA09 /* GetMedicalInfoOperation.swift */,
 				8F9954461FAEA99100E3BA09 /* GetUserOperation.swift */,
 				8F99544E1FAFC3F100E3BA09 /* PostUserOperation.swift */,
+				8FBB7E571FC24EE9009F2F55 /* UpdateUserOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				8F9954431FAEA91700E3BA09 /* FosterViewModel.swift in Sources */,
 				FA4E7CFA1F801DF700CFBABA /* Incident.swift in Sources */,
 				FA60B9121F7F4F9A00B410A4 /* LandingVC.swift in Sources */,
+				8FBB7E581FC24EE9009F2F55 /* UpdateUserOperation.swift in Sources */,
 				FA4E7CEE1F7FF4E300CFBABA /* GetIncidentOperation.swift in Sources */,
 				8F99544B1FAEAA7D00E3BA09 /* IncidentViewModel.swift in Sources */,
 				FA60B9101F7F4F9A00B410A4 /* ChatVC.swift in Sources */,

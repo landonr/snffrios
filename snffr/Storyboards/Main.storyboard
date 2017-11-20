@@ -789,6 +789,7 @@
                         <outlet property="nameLabel" destination="YYP-Ai-qet" id="j8E-52-uwH"/>
                         <outlet property="previewImageView" destination="Lie-ZE-ra1" id="Y0s-vj-ELc"/>
                         <outlet property="previewView" destination="aWP-xl-u9a" id="dVy-5I-MY4"/>
+                        <outlet property="profileButton" destination="GFR-4x-VuX" id="xna-TD-5Vs"/>
                         <outlet property="profilePicView" destination="IWJ-sy-fGZ" id="bjE-T0-5VC"/>
                         <outlet property="profileView" destination="2Nn-Te-Y0c" id="ixc-Ty-XpU"/>
                         <outlet property="scrollView" destination="oRc-AA-MCG" id="mI4-Rm-xTP"/>
@@ -905,17 +906,17 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GFR-4x-VuX" customClass="RoundedButton" customModule="snffr" customModuleProvider="target">
-                            <rect key="frame" x="128" y="337" width="120" height="40"/>
+                            <rect key="frame" x="127.5" y="337" width="120" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="PiE-N3-QEA"/>
                                 <constraint firstAttribute="width" constant="120" id="cuu-w0-nKp"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                            <state key="normal" title="Log Out" backgroundImage="navigation">
+                            <state key="normal" title="Profile" backgroundImage="navigation">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
-                                <action selector="logOutUser:" destination="ZJi-hT-Uhs" eventType="touchUpInside" id="Vrl-jZ-ss5"/>
+                                <segue destination="g9q-Yh-Tc4" kind="show" identifier="showProfile" id="h3b-RA-Dak"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rxp-eh-St1">
@@ -1052,10 +1053,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="37q-AC-H7u">
-                                <rect key="frame" x="0.0" y="370" width="375" height="297"/>
+                                <rect key="frame" x="0.0" y="370" width="375" height="248"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vfq-Dg-ZSE">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="297"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="248"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="8C8-5J-zz7">
@@ -1142,7 +1143,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yVv-Mc-1ib" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2341.5999999999999" y="1134.7826086956522"/>
+            <point key="canvasLocation" x="2343" y="1265"/>
         </scene>
         <!--Foster Profile View Controller-->
         <scene sceneID="Exv-Pg-Frl">
@@ -1153,7 +1154,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Foster Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDh-us-Ihi">
-                                <rect key="frame" x="16" y="68" width="175" height="48"/>
+                                <rect key="frame" x="16" y="24" width="175" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="hOk-CT-EWP"/>
                                 </constraints>
@@ -1162,10 +1163,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b4m-Fj-f04">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fXa-he-OPB">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profileCell" id="Swx-s6-1s6" customClass="FosterProfileViewTableViewCell" customModule="snffr" customModuleProvider="target">
@@ -1217,7 +1218,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ytk-Tu-aUe">
-                                <rect key="frame" x="333" y="77" width="34" height="30"/>
+                                <rect key="frame" x="333" y="33" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="didTapSaveButton" destination="g9q-Yh-Tc4" eventType="touchUpInside" id="wc8-8r-W95"/>
@@ -1244,7 +1245,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qM7-a3-oed" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3116" y="1135"/>
+            <point key="canvasLocation" x="3068" y="1200"/>
         </scene>
     </scenes>
     <resources>
@@ -1261,6 +1262,7 @@
         <image name="send" width="32" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4OF-aY-uTb"/>
+        <segue reference="h3b-RA-Dak"/>
+        <segue reference="HNw-JI-ZI3"/>
     </inferredMetricsTieBreakers>
 </document>

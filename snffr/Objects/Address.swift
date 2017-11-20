@@ -58,10 +58,7 @@ public final class Address: Mappable, NSCoding {
     var dictionary: [String: Any] = [:]
     if let value = city { dictionary[SerializationKeys.city] = value }
     if let value = postalCode { dictionary[SerializationKeys.postalCode] = value }
-    if let value = updatedAt { dictionary[SerializationKeys.updatedAt] = value }
     if let value = addressId { dictionary[SerializationKeys.addressId] = value }
-    if let value = createdAt { dictionary[SerializationKeys.createdAt] = value }
-    if let value = version { dictionary[SerializationKeys.version] = value }
     if let value = addressLine1 { dictionary[SerializationKeys.addressLine1] = value }
     return dictionary
   }

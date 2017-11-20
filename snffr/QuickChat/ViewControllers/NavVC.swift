@@ -39,6 +39,7 @@ class NavVC: UINavigationController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var profilePicView: RoundedImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var profileButton: UIButton!
     var topAnchorContraint: NSLayoutConstraint!
     let darkView = UIView.init()
     var items = [User]()
@@ -193,15 +194,15 @@ class NavVC: UINavigationController, UICollectionViewDelegate, UICollectionViewD
     
     //Downloads current user credentials
     func fetchUserInfo() {
-        if let id = Auth.auth().currentUser?.uid {
-            User.info(forUserID: id, completion: {[weak weakSelf = self] (user) in
-                DispatchQueue.main.async {
-                    weakSelf?.nameLabel.text = user.name
-                    weakSelf?.emailLabel.text = user.email
-                    weakSelf?.profilePicView.image = user.profilePic
-                    weakSelf = nil
-                }
-            })
+        if let foster = FosterViewModel.sharedInstance.activeUser,
+            let firstname = foster.firstName,
+            let lastname = foster.lastName {
+            self.nameLabel.text = firstname + " " + lastname
+            self.emailLabel.text = foster.phone?.phoneNumber
+        } else {
+            self.nameLabel.text = "Admin"
+            self.profileButton.isEnabled = false
+            self.profileButton.isHidden = true
         }
     }
     
@@ -216,14 +217,6 @@ class NavVC: UINavigationController, UICollectionViewDelegate, UICollectionViewD
     
     @IBAction func closeView(_ sender: Any) {
         self.dismissExtraViews()
-    }
-  
-    @IBAction func logOutUser(_ sender: Any) {
-        User.logOutUser { (status) in
-            if status == true {
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
     }
     
     //MARK: Delegates
@@ -246,6 +239,16 @@ class NavVC: UINavigationController, UICollectionViewDelegate, UICollectionViewD
             cell.profilePic.layer.borderWidth = 2
             cell.profilePic.layer.borderColor = GlobalVariables.purple.cgColor
             return cell
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.dismissExtraViews()
+        if segue.identifier == "showProfile" {
+            if let vc = segue.destination as? FosterProfileViewController,
+                let foster = FosterViewModel.sharedInstance.activeUser{
+                vc.activeFoster = foster
+            }
         }
     }
 

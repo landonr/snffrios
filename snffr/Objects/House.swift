@@ -57,12 +57,9 @@ public final class House: Mappable, NSCoding {
   /// - returns: A Key value pair containing all valid values in the object.
   public func dictionaryRepresentation() -> [String: Any] {
     var dictionary: [String: Any] = [:]
-    if let value = version { dictionary[SerializationKeys.version] = value }
     if let value = houseId { dictionary[SerializationKeys.houseId] = value }
-    if let value = updatedAt { dictionary[SerializationKeys.updatedAt] = value }
     if let value = houseTypeId { dictionary[SerializationKeys.houseTypeId] = value }
     if let value = squareFeet { dictionary[SerializationKeys.squareFeet] = value }
-    if let value = createdAt { dictionary[SerializationKeys.createdAt] = value }
     return dictionary
   }
 

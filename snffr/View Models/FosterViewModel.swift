@@ -64,7 +64,7 @@ class FosterViewModel: NSObject {
     
     func updateFoster(foster: Foster)
     {
-        let postFosterOperation = PostUserOperation(foster) {
+        let postFosterOperation = UpdateUserOperation(foster) {
             NotificationCenter.default.post(Notification(name: NSNotification.Name(rawValue: "usersDidUpdate"), object: nil))
         }
         self.queue.addOperation(postFosterOperation)

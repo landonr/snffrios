@@ -54,11 +54,8 @@ public final class Phone: Mappable, NSCoding {
   /// - returns: A Key value pair containing all valid values in the object.
   public func dictionaryRepresentation() -> [String: Any] {
     var dictionary: [String: Any] = [:]
-    if let value = version { dictionary[SerializationKeys.version] = value }
-    if let value = updatedAt { dictionary[SerializationKeys.updatedAt] = value }
     if let value = phoneNumber { dictionary[SerializationKeys.phoneNumber] = value }
     if let value = phoneId { dictionary[SerializationKeys.phoneId] = value }
-    if let value = createdAt { dictionary[SerializationKeys.createdAt] = value }
     return dictionary
   }
 
