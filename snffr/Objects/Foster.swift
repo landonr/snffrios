@@ -84,11 +84,11 @@ public final class Foster: Mappable, NSCoding {
     if let value = lastName { dictionary[SerializationKeys.lastName] = value }
     if let value = userId { dictionary[SerializationKeys.userId] = value }
     if let value = phoneId { dictionary[SerializationKeys.phoneId] = value }
-    if let value = phone { dictionary[SerializationKeys.phone] = value.dictionaryRepresentation() }
+    //if let value = phone { dictionary[SerializationKeys.phone] = value.dictionaryRepresentation() }
     if let value = addressId { dictionary[SerializationKeys.addressId] = value }
-    if let value = address { dictionary[SerializationKeys.address] = value.dictionaryRepresentation() }
+    //if let value = address { dictionary[SerializationKeys.address] = value.dictionaryRepresentation() }
     if let value = userTypeId { dictionary[SerializationKeys.userTypeId] = value }
-    if let value = house { dictionary[SerializationKeys.house] = value.dictionaryRepresentation() }
+    //if let value = house { dictionary[SerializationKeys.house] = value.dictionaryRepresentation() }
     if let value = firstName { dictionary[SerializationKeys.firstName] = value }
     if let value = auth0Key { dictionary[SerializationKeys.auth0Key] = value }
     return dictionary

@@ -12,7 +12,7 @@ import AlamofireObjectMapper
 import Auth0
 
 class UpdateUserOperation: Operation {
-    
+    let putFosterOperationGroup = DispatchGroup()
     fileprivate var completion: (() -> Void)!
     var foster: Foster?
     enum UpdateUserOperationError: Error {
@@ -25,10 +25,13 @@ class UpdateUserOperation: Operation {
     }
     
     override func start() {
-        putFoster()
+        putFosterInfo()
+        putFosterOperationGroup.notify(queue: .main) {
+            self.putFoster()
+        }
     }
     
-    func postPhone(phone: Phone) {
+    func postPhone(phone: Phone, completion: @escaping(() -> Void)) {
         var method = HTTPMethod.post
         var address = "http://rezqs.herokuapp.com/api/phones"
         
@@ -37,24 +40,78 @@ class UpdateUserOperation: Operation {
             method = .put
         }
         
-        Alamofire.request(address, method: method, parameters: phone.dictionaryRepresentation()).responseString { (response) in
-            
+        Alamofire.request(address, method: method, parameters: phone.dictionaryRepresentation()).responseObject {(response: DataResponse<Phone>) in
+            if let result = response.result.value {
+                self.foster?.phone = result
+                self.foster?.phoneId = result.phoneId
+                completion()
+            }
+        }
+    }
+    
+    func postHouse(house: House, completion: @escaping(() -> Void)) {
+        var method = HTTPMethod.post
+        var address = "http://rezqs.herokuapp.com/api/phones"
+        
+        if let houseId = house.houseId {
+            address = "http://rezqs.herokuapp.com/api/phones/\(houseId)"
+            method = .put
+        }
+        
+        Alamofire.request(address, method: method, parameters: house.dictionaryRepresentation()).responseObject {(response: DataResponse<House>) in
+            if let result = response.result.value {
+                self.foster?.house = result
+                self.foster?.houseId = result.houseId
+                completion()
+            }
+        }
+    }
+    
+    func postAddress(address: Address, completion: @escaping(() -> Void)) {
+        var method = HTTPMethod.post
+        var url = "http://rezqs.herokuapp.com/api/addresses"
+        
+        if let addressId = address.addressId {
+            url = "http://rezqs.herokuapp.com/api/addresses/\(addressId)"
+            method = .put
+        }
+        
+        Alamofire.request(url, method: method, parameters: address.dictionaryRepresentation()).responseObject {(response: DataResponse<Address>) in
+            if let result = response.result.value {
+                self.foster?.address = result
+                self.foster?.addressId = result.addressId
+                completion()
+            }
         }
     }
     
     func putFoster() {
         FosterViewModel.sharedInstance.activeUser = self.foster
         if let userId = self.foster?.userId {
-            if let theJSONData = try? JSONSerialization.data(
-                withJSONObject: self.foster?.dictionaryRepresentation(),
-                options: []) {
-                let theJSONText = String(data: theJSONData,
-                                         encoding: .utf8)
-                print("JSON string = \(theJSONText)")
-            }
             Alamofire.request("http://rezqs.herokuapp.com/api/users/\(userId)", method: .put, parameters: self.foster?.dictionaryRepresentation()).responseString { (response) in
                 self.completion()
             }
+        }
+    }
+    
+    func putFosterInfo() {
+        if let phone = self.foster?.phone {
+            putFosterOperationGroup.enter()
+            self.postPhone(phone: phone, completion: {
+                self.putFosterOperationGroup.leave()
+            })
+        }
+        if let house = self.foster?.house {
+            putFosterOperationGroup.enter()
+            self.postHouse(house: house, completion: {
+                self.putFosterOperationGroup.leave()
+            })
+        }
+        if let address = self.foster?.address {
+            putFosterOperationGroup.enter()
+            self.postAddress(address: address, completion: {
+                self.putFosterOperationGroup.leave()
+            })
         }
     }
 }
