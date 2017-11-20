@@ -14,11 +14,13 @@ class LaunchViewController: UIViewController {
     var firstLoad = true
     var accessToken: String?
     var admin = false
+    var adminTapCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
         FirebaseApp.configure()
         _ = OperationViewModel()
+        adminTapCount = 0
     }
     
     fileprivate func saveAccesstoken(_ token: String?, admin: Bool?) {
@@ -58,17 +60,17 @@ class LaunchViewController: UIViewController {
         super.viewDidAppear(animated)
     }
     
-    @IBAction func didTapLogin() {
-        signUp()
-    }
-    
     @IBAction func didTapFosterSignup() {
         signUp()
     }
     
     @IBAction func didTapAdminSignup() {
-        self.admin = true
-        signUp()
+        if self.adminTapCount == 5 {
+            self.adminTapCount += 1
+        } else {
+            self.admin = true
+            signUp()
+        }
     }
     
     fileprivate func getAccessToken() -> String? {

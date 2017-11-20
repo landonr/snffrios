@@ -36,28 +36,29 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="olR-Ls-1Cs">
-                                <rect key="frame" x="135.5" y="307" width="105" height="38"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="158.5" y="335" width="58" height="38"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                <state key="normal" title="Foster Login">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" red="0.93822842836380005" green="0.38509821891784668" blue="0.2410704493522644" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didTapFosterSignup" destination="NxD-JQ-vHM" eventType="touchUpInside" id="NLs-VS-FDV"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Snffr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Org-XI-lmc">
-                                <rect key="frame" x="159" y="249" width="57" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCz-qP-bC6">
-                                <rect key="frame" x="147.5" y="445" width="80" height="25"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCz-qP-bC6">
+                                <rect key="frame" x="140.5" y="30" width="94" height="165"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="165" id="42a-qV-Lmo"/>
+                                    <constraint firstAttribute="width" constant="94" id="DbD-tF-Fou"/>
+                                </constraints>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                <state key="normal" title="Admin Login">
+                                <state key="normal" image="logoImage">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -67,16 +68,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="olR-Ls-1Cs" firstAttribute="top" secondItem="Org-XI-lmc" secondAttribute="bottom" constant="25" id="5y1-Z0-1xc"/>
                             <constraint firstItem="dCz-qP-bC6" firstAttribute="centerX" secondItem="t8o-1y-kY1" secondAttribute="centerX" id="8Pa-Vn-Vy9"/>
                             <constraint firstAttribute="trailing" secondItem="e0u-lT-GHZ" secondAttribute="trailing" id="B0z-jt-Xeb"/>
+                            <constraint firstItem="olR-Ls-1Cs" firstAttribute="top" secondItem="dCz-qP-bC6" secondAttribute="bottom" constant="140" id="FWa-3n-UpU"/>
                             <constraint firstItem="olR-Ls-1Cs" firstAttribute="centerX" secondItem="t8o-1y-kY1" secondAttribute="centerX" id="HN3-QG-LTp"/>
-                            <constraint firstItem="dCz-qP-bC6" firstAttribute="top" secondItem="olR-Ls-1Cs" secondAttribute="bottom" constant="100" id="Scz-Po-103"/>
                             <constraint firstItem="e0u-lT-GHZ" firstAttribute="top" secondItem="t8o-1y-kY1" secondAttribute="top" id="ez7-7j-yaU"/>
                             <constraint firstItem="NO7-j7-9Qg" firstAttribute="top" secondItem="e0u-lT-GHZ" secondAttribute="bottom" id="kE5-mC-JlY"/>
-                            <constraint firstItem="Org-XI-lmc" firstAttribute="centerX" secondItem="t8o-1y-kY1" secondAttribute="centerX" id="nEu-Xd-Wcg"/>
                             <constraint firstItem="e0u-lT-GHZ" firstAttribute="leading" secondItem="t8o-1y-kY1" secondAttribute="leading" id="oaY-6P-Tu3"/>
-                            <constraint firstItem="Org-XI-lmc" firstAttribute="top" secondItem="It3-dA-vPH" secondAttribute="bottom" constant="229" id="z6D-mm-9Re"/>
+                            <constraint firstItem="dCz-qP-bC6" firstAttribute="top" secondItem="It3-dA-vPH" secondAttribute="bottom" constant="10" id="pqM-M8-qA0"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1252,6 +1251,7 @@
         <image name="background" width="375" height="667"/>
         <image name="close" width="25" height="25"/>
         <image name="dog1" width="1166" height="1187"/>
+        <image name="logoImage" width="189" height="331"/>
         <image name="more" width="32" height="25"/>
         <image name="navigation" width="375" height="64"/>
         <image name="profile pic" width="100" height="100"/>

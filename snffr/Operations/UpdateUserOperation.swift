@@ -44,10 +44,14 @@ class UpdateUserOperation: Operation {
     
     func putFoster() {
         FosterViewModel.sharedInstance.activeUser = self.foster
-        if let phone = self.foster?.phone {
-            self.postPhone(phone: phone)
-        }
         if let userId = self.foster?.userId {
+            if let theJSONData = try? JSONSerialization.data(
+                withJSONObject: self.foster?.dictionaryRepresentation(),
+                options: []) {
+                let theJSONText = String(data: theJSONData,
+                                         encoding: .utf8)
+                print("JSON string = \(theJSONText)")
+            }
             Alamofire.request("http://rezqs.herokuapp.com/api/users/\(userId)", method: .put, parameters: self.foster?.dictionaryRepresentation()).responseString { (response) in
                 self.completion()
             }

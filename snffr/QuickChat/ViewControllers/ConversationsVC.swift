@@ -58,6 +58,9 @@ class ConversationsVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         self.parent?.navigationItem.leftBarButtonItem = self.leftButton
         self.parent?.navigationItem.rightBarButtonItem = rightButton
         self.tableView.tableFooterView = UIView.init(frame: CGRect.zero)
+        if let _ = FosterViewModel.sharedInstance.activeUser {
+            self.tabBarController?.tabBar.isHidden = true
+        }
         if let id = Auth.auth().currentUser?.uid {
             User.info(forUserID: id, completion: { [weak weakSelf = self] (user) in
                 let image = user.profilePic
