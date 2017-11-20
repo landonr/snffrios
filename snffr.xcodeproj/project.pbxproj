@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F3570C21FC395F60021252A /* SnffrErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3570BD1FC395F50021252A /* SnffrErrors.swift */; };
+		8F3570C31FC395F60021252A /* SnffrValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3570BE1FC395F50021252A /* SnffrValidationError.swift */; };
+		8F3570C41FC395F60021252A /* SnffrValidatorArgs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3570BF1FC395F50021252A /* SnffrValidatorArgs.swift */; };
+		8F3570C51FC395F60021252A /* SnffrInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3570C01FC395F50021252A /* SnffrInstance.swift */; };
+		8F3570C61FC395F60021252A /* SnffrRaw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3570C11FC395F50021252A /* SnffrRaw.swift */; };
 		8F42E76C1FBBBE8B0083AA6F /* FosterProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F42E76B1FBBBE8B0083AA6F /* FosterProfileViewController.swift */; };
 		8F42E76E1FBBF4C70083AA6F /* PostIncidentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F42E76D1FBBF4C70083AA6F /* PostIncidentOperation.swift */; };
 		8F42E7701FBBF6840083AA6F /* PutIncidentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F42E76F1FBBF6840083AA6F /* PutIncidentOperation.swift */; };
@@ -52,6 +57,11 @@
 
 /* Begin PBXFileReference section */
 		54385D343A26F61C0EACC5B4 /* Pods-snffr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-snffr.release.xcconfig"; path = "Pods/Target Support Files/Pods-snffr/Pods-snffr.release.xcconfig"; sourceTree = "<group>"; };
+		8F3570BD1FC395F50021252A /* SnffrErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnffrErrors.swift; path = snffr/Objects/ValidationError/SnffrErrors.swift; sourceTree = SOURCE_ROOT; };
+		8F3570BE1FC395F50021252A /* SnffrValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnffrValidationError.swift; path = snffr/Objects/ValidationError/SnffrValidationError.swift; sourceTree = SOURCE_ROOT; };
+		8F3570BF1FC395F50021252A /* SnffrValidatorArgs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnffrValidatorArgs.swift; path = snffr/Objects/ValidationError/SnffrValidatorArgs.swift; sourceTree = SOURCE_ROOT; };
+		8F3570C01FC395F50021252A /* SnffrInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnffrInstance.swift; path = snffr/Objects/ValidationError/SnffrInstance.swift; sourceTree = SOURCE_ROOT; };
+		8F3570C11FC395F50021252A /* SnffrRaw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnffrRaw.swift; path = snffr/Objects/ValidationError/SnffrRaw.swift; sourceTree = SOURCE_ROOT; };
 		8F42E76B1FBBBE8B0083AA6F /* FosterProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FosterProfileViewController.swift; sourceTree = "<group>"; };
 		8F42E76D1FBBF4C70083AA6F /* PostIncidentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostIncidentOperation.swift; sourceTree = "<group>"; };
 		8F42E76F1FBBF6840083AA6F /* PutIncidentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutIncidentOperation.swift; sourceTree = "<group>"; };
@@ -122,9 +132,23 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
+		8F3570BC1FC395E40021252A /* ValidationError */ = {
+			isa = PBXGroup;
+			children = (
+				8F3570BD1FC395F50021252A /* SnffrErrors.swift */,
+				8F3570C01FC395F50021252A /* SnffrInstance.swift */,
+				8F3570C11FC395F50021252A /* SnffrRaw.swift */,
+				8F3570BE1FC395F50021252A /* SnffrValidationError.swift */,
+				8F3570BF1FC395F50021252A /* SnffrValidatorArgs.swift */,
+			);
+			name = ValidationError;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		8F7BD80D1F9D12C7003011C2 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				8F3570BC1FC395E40021252A /* ValidationError */,
 				8FBB7E501FC11A0D009F2F55 /* Address.swift */,
 				8FBB7E511FC11A0E009F2F55 /* House.swift */,
 				8FBB7E4F1FC11A0D009F2F55 /* Phone.swift */,
@@ -413,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FBB7E521FC11A0F009F2F55 /* Phone.swift in Sources */,
+				8F3570C51FC395F60021252A /* SnffrInstance.swift in Sources */,
 				8F9954491FAEA9B000E3BA09 /* GetMedicalInfoOperation.swift in Sources */,
 				FA60B90C1F7F4F9300B410A4 /* Conversation.swift in Sources */,
 				8F9954431FAEA91700E3BA09 /* FosterViewModel.swift in Sources */,
@@ -421,6 +446,7 @@
 				8FBB7E581FC24EE9009F2F55 /* UpdateUserOperation.swift in Sources */,
 				FA4E7CEE1F7FF4E300CFBABA /* GetIncidentOperation.swift in Sources */,
 				8F99544B1FAEAA7D00E3BA09 /* IncidentViewModel.swift in Sources */,
+				8F3570C41FC395F60021252A /* SnffrValidatorArgs.swift in Sources */,
 				FA60B9101F7F4F9A00B410A4 /* ChatVC.swift in Sources */,
 				8FBB7E531FC11A0F009F2F55 /* Address.swift in Sources */,
 				8FE010541F7C8F7700849203 /* LaunchViewController.swift in Sources */,
@@ -428,9 +454,11 @@
 				FA4E7D001F802B3800CFBABA /* DogViewModel.swift in Sources */,
 				8F42E76E1FBBF4C70083AA6F /* PostIncidentOperation.swift in Sources */,
 				8F99544D1FAF87FE00E3BA09 /* OperationViewModel.swift in Sources */,
+				8F3570C61FC395F60021252A /* SnffrRaw.swift in Sources */,
 				FA60B90E1F7F4F9300B410A4 /* User.swift in Sources */,
 				FA60B90D1F7F4F9300B410A4 /* Message.swift in Sources */,
 				8F9954451FAEA93B00E3BA09 /* MedicalInfoViewModel.swift in Sources */,
+				8F3570C31FC395F60021252A /* SnffrValidationError.swift in Sources */,
 				8FBB7E541FC11A0F009F2F55 /* House.swift in Sources */,
 				FA60B9131F7F4F9A00B410A4 /* NavVC.swift in Sources */,
 				FA4E7CE91F7F6B7300CFBABA /* IncidentSubmitViewController.swift in Sources */,
@@ -444,6 +472,7 @@
 				FA4E7CE71F7F627A00CFBABA /* DogProfileViewController.swift in Sources */,
 				FA4E7CFE1F80277D00CFBABA /* GetDogOperation.swift in Sources */,
 				8F99544F1FAFC3F100E3BA09 /* PostUserOperation.swift in Sources */,
+				8F3570C21FC395F60021252A /* SnffrErrors.swift in Sources */,
 				FA60B90B1F7F4F8E00B410A4 /* Helper Files.swift in Sources */,
 				FA60B9111F7F4F9A00B410A4 /* ConversationsVC.swift in Sources */,
 				FA8384361F80671F000CF815 /* Foster.swift in Sources */,

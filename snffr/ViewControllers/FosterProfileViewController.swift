@@ -29,6 +29,21 @@ class FosterProfileViewController: UIViewController
         if let firstName = self.activeFoster?.firstName, let lastName = self.activeFoster?.lastName {
             self.nameLabel?.text = firstName + " " + lastName
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showErrorAlert(_:)), name: NSNotification.Name(rawValue: "validationError"), object: nil)
+    }
+
+    func showErrorAlert(_ notification: NSNotification) {
+        if let message = notification.userInfo?["error"] as? String {
+            let alert = UIAlertController(title: title,
+                                          message: message,
+                                          preferredStyle: UIAlertControllerStyle.alert)
+            
+            let cancelAction = UIAlertAction(title: "OK",
+                                             style: .cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     @IBAction func didTapSaveButton() {
@@ -37,22 +52,32 @@ class FosterProfileViewController: UIViewController
             let house = House()
             let phone = Phone()
             if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? FosterProfileViewTableViewCell {
-                address.addressLine1 = cell.textField?.text
+                if cell.textField?.text != "" {
+                    address.addressLine1 = cell.textField?.text
+                }
             }
             if let cell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? FosterProfileViewTableViewCell {
-                address.city = cell.textField?.text
+                if cell.textField?.text != "" {
+                    address.city = cell.textField?.text
+                }
             }
             if let cell = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? FosterProfileViewTableViewCell {
-                address.postalCode = cell.textField?.text
+                if cell.textField?.text != "" {
+                    address.postalCode = cell.textField?.text
+                }
             }
             if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? FosterProfileViewTableViewCell {
-                if let feetText = cell.textField?.text,
-                    let squareFeet = Int(feetText) {
-                    house.squareFeet = squareFeet
+                if cell.textField?.text != "" {
+                    if let feetText = cell.textField?.text,
+                        let squareFeet = Int(feetText) {
+                        house.squareFeet = squareFeet
+                    }
                 }
             }
             if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as? FosterProfileViewTableViewCell {
-                phone.phoneNumber = cell.textField?.text
+                if cell.textField?.text != "" {
+                    phone.phoneNumber = cell.textField?.text
+                }
             }
             foster.address = address
             foster.phone = phone

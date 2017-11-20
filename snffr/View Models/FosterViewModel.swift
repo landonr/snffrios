@@ -18,6 +18,13 @@ class FosterViewModel: NSObject {
         let getUserOperation = GetUserOperation { (users) in
             if let users = users {
                 self.users = users
+                if let activeUser = self.activeUser {
+                    for user in self.users {
+                        if activeUser.userId == user.userId {
+                            self.activeUser = user
+                        }
+                    }
+                }
             }
         }
         self.queue.addOperation(getUserOperation)

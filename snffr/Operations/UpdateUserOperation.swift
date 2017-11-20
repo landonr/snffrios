@@ -10,11 +10,12 @@ import Foundation
 import Alamofire
 import AlamofireObjectMapper
 import Auth0
-
+import ObjectMapper
 class UpdateUserOperation: Operation {
     let putFosterOperationGroup = DispatchGroup()
     fileprivate var completion: (() -> Void)!
     var foster: Foster?
+    var errorString = ""
     enum UpdateUserOperationError: Error {
         case busted
     }
@@ -27,6 +28,9 @@ class UpdateUserOperation: Operation {
     override func start() {
         putFosterInfo()
         putFosterOperationGroup.notify(queue: .main) {
+            if self.errorString != "" {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "validationError"), object: nil, userInfo: ["error": self.errorString])
+            }
             self.putFoster()
         }
     }
@@ -41,7 +45,17 @@ class UpdateUserOperation: Operation {
         }
         
         Alamofire.request(address, method: method, parameters: phone.dictionaryRepresentation()).responseObject {(response: DataResponse<Phone>) in
-            if let result = response.result.value {
+            if response.response?.statusCode == 400 {
+                if let dada = String(data: response.data!, encoding: String.Encoding.utf8)
+                {
+                    if let result = Mapper<SnffrValidationError>().map(JSONString: dada) {
+                        if let error = result.errors?.first?.message {
+                            self.errorString = self.errorString + error + "\n"
+                            completion()
+                        }
+                    }
+                }
+            } else if let result = response.result.value {
                 self.foster?.phone = result
                 self.foster?.phoneId = result.phoneId
                 completion()
@@ -59,14 +73,24 @@ class UpdateUserOperation: Operation {
         }
         
         Alamofire.request(address, method: method, parameters: house.dictionaryRepresentation()).responseObject {(response: DataResponse<House>) in
-            if let result = response.result.value {
+            if response.response?.statusCode == 400 {
+                if let dada = String(data: response.data!, encoding: String.Encoding.utf8)
+                {
+                    if let result = Mapper<SnffrValidationError>().map(JSONString: dada) {
+                        if let error = result.errors?.first?.message {
+                            self.errorString = self.errorString + error + "\n"
+                            completion()
+                        }
+                    }
+                }
+            } else if let result = response.result.value {
                 self.foster?.house = result
                 self.foster?.houseId = result.houseId
                 completion()
             }
         }
     }
-    
+    fileprivate typealias JSONFormat = [String: Any]
     func postAddress(address: Address, completion: @escaping(() -> Void)) {
         var method = HTTPMethod.post
         var url = "http://rezqs.herokuapp.com/api/addresses"
@@ -76,8 +100,19 @@ class UpdateUserOperation: Operation {
             method = .put
         }
         
+        
         Alamofire.request(url, method: method, parameters: address.dictionaryRepresentation()).responseObject {(response: DataResponse<Address>) in
-            if let result = response.result.value {
+            if response.response?.statusCode == 400 {
+                if let dada = String(data: response.data!, encoding: String.Encoding.utf8)
+                {
+                    if let result = Mapper<SnffrValidationError>().map(JSONString: dada) {
+                        if let error = result.errors?.first?.message {
+                            self.errorString = self.errorString + error + "\n"
+                            completion()
+                        }
+                    }
+                }
+            } else if let result = response.result.value {
                 self.foster?.address = result
                 self.foster?.addressId = result.addressId
                 completion()
@@ -89,6 +124,9 @@ class UpdateUserOperation: Operation {
         FosterViewModel.sharedInstance.activeUser = self.foster
         if let userId = self.foster?.userId {
             Alamofire.request("http://rezqs.herokuapp.com/api/users/\(userId)", method: .put, parameters: self.foster?.dictionaryRepresentation()).responseString { (response) in
+                if response.response?.statusCode == 500 {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "validationError"), object: nil, userInfo: ["error": "500 Interal Server Error\nPut Fosters"])
+                }
                 self.completion()
             }
         }
