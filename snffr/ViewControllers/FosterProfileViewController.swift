@@ -112,6 +112,8 @@ extension FosterProfileViewController: UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell") as? FosterProfileViewTableViewCell {
             if let foster = self.activeFoster {
                 cell.textField?.delegate = self
+                cell.textField?.tag = 0
+                cell.textField?.keyboardType = UIKeyboardType.alphabet
                 if indexPath.section == 0 {
                     if indexPath.row == 0 {
                         cell.titleLabel.text = "Address"
@@ -127,10 +129,14 @@ extension FosterProfileViewController: UITableViewDataSource {
                     cell.titleLabel.text = "Square Feet"
                     if let squareFeet = foster.house?.squareFeet {
                         cell.textField?.text = String(describing: squareFeet)
+                        cell.textField?.keyboardType = UIKeyboardType.numberPad
+                        cell.textField?.tag = 1
                     }
                 } else if indexPath.section == 2 {
                     cell.titleLabel.text = "Phone Number"
                     cell.textField?.text = foster.phone?.phoneNumber
+                    cell.textField?.keyboardType = UIKeyboardType.numberPad
+                    cell.textField?.tag = 1
                 }
             }
             return cell
@@ -141,14 +147,30 @@ extension FosterProfileViewController: UITableViewDataSource {
 
 extension FosterProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         if let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell") as? FosterProfileViewTableViewCell {
-            cell.textField?.becomeFirstResponder()
+            _ = cell.becomeFirstResponder()
         }
     }
 }
 
 extension FosterProfileViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.tag == 1 {
+            if let text = textField.text {
+                let newStr = (text as NSString)
+                    .replacingCharacters(in: range, with: string)
+                if newStr.isEmpty {
+                    return true
+                }
+                if let _ = Int(newStr) {
+                    return true
+                }
+                return false
+            }
+        }
+        return true
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -159,4 +181,8 @@ class FosterProfileViewTableViewCell: UITableViewCell
 {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
+    
+    override func becomeFirstResponder() -> Bool {
+        return self.textField.becomeFirstResponder()
+    }
 }

@@ -65,13 +65,13 @@ class UpdateUserOperation: Operation {
     
     func postHouse(house: House, completion: @escaping(() -> Void)) {
         var method = HTTPMethod.post
-        var address = "http://rezqs.herokuapp.com/api/phones"
+        var address = "http://rezqs.herokuapp.com/api/houses"
         
         if let houseId = house.houseId {
-            address = "http://rezqs.herokuapp.com/api/phones/\(houseId)"
+            address = "http://rezqs.herokuapp.com/api/houses/\(houseId)"
             method = .put
         }
-        
+        house.houseTypeId = 1
         Alamofire.request(address, method: method, parameters: house.dictionaryRepresentation()).responseObject {(response: DataResponse<House>) in
             if response.response?.statusCode == 400 {
                 if let dada = String(data: response.data!, encoding: String.Encoding.utf8)
@@ -90,7 +90,7 @@ class UpdateUserOperation: Operation {
             }
         }
     }
-    fileprivate typealias JSONFormat = [String: Any]
+
     func postAddress(address: Address, completion: @escaping(() -> Void)) {
         var method = HTTPMethod.post
         var url = "http://rezqs.herokuapp.com/api/addresses"
